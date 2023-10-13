@@ -15,7 +15,15 @@ import (
 
 	"github.com/upbound/upjet/pkg/terraform"
 
-	"github.com/upbound/upjet-provider-template/apis/v1beta1"
+	"github.com/ankasoftco/provider-tmc/apis/v1beta1"
+)
+
+const (
+	keyEndpoint         = "endpoint"
+	keyToken = "vmw_cloud_api_token"
+
+	envEndpoint          = "TMC_ENDPOINT"
+	envToken = "VMW_CLOUD_API_TOKEN"
 )
 
 const (
@@ -24,7 +32,7 @@ const (
 	errGetProviderConfig    = "cannot get referenced ProviderConfig"
 	errTrackUsage           = "cannot track ProviderConfig usage"
 	errExtractCredentials   = "cannot extract credentials"
-	errUnmarshalCredentials = "cannot unmarshal template credentials as JSON"
+	errUnmarshalCredentials = "cannot unmarshal tmc credentials as JSON"
 )
 
 // TerraformSetupBuilder builds Terraform a terraform.SetupFn function which
@@ -60,6 +68,14 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		creds := map[string]string{}
 		if err := json.Unmarshal(data, &creds); err != nil {
 			return ps, errors.Wrap(err, errUnmarshalCredentials)
+		}
+
+		ps.Configuration = map[string]interface{}{}
+		if v, ok := creds[keyEndpoint]; ok {
+			ps.Configuration[keyEndpoint] = v
+		}
+		if v, ok := creds[keyToken]; ok {
+			ps.Configuration[keyToken] = v
 		}
 
 		// Set credentials in Terraform provider configuration.
