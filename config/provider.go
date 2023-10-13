@@ -11,6 +11,7 @@ import (
 	ujconfig "github.com/upbound/upjet/pkg/config"
 
 	akscluster "github.com/ankasoftco/provider-tmc/config/akscluster"
+	cluster "github.com/ankasoftco/provider-tmc/config/cluster"
 
 
 )
