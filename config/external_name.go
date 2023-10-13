@@ -11,6 +11,7 @@ import "github.com/upbound/upjet/pkg/config"
 var ExternalNameConfigs = map[string]config.ExternalName{
 	// Import requires using a randomly generated ID from provider: nl-2e21sda
 	"tanzu-mission-control_akscluster": 									config.IdentifierFromProvider,
+	"tanzu-mission-control_cluster": 										config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the
