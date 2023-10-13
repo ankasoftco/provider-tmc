@@ -12,6 +12,7 @@ import (
 
 	akscluster "github.com/ankasoftco/provider-tmc/config/akscluster"
 	cluster "github.com/ankasoftco/provider-tmc/config/cluster"
+	cluster_group "github.com/ankasoftco/provider-tmc/config/cluster_group"
 
 
 )
@@ -41,6 +42,7 @@ func GetProvider() *ujconfig.Provider {
 		// add custom config functions
 		akscluster.Configure,
 		cluster.Configure,
+		cluster_group.Configure,
 		
 	} {
 		configure(pc)
