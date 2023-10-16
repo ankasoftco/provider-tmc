@@ -22,6 +22,7 @@ import (
 	image_policy "github.com/ankasoftco/provider-tmc/config/image_policy"
 	integration "github.com/ankasoftco/provider-tmc/config/integration"
 	kubernetes_secret "github.com/ankasoftco/provider-tmc/config/kubernetes_secret"
+	kustomization "github.com/ankasoftco/provider-tmc/config/kustomization"
 
 
 )
@@ -61,6 +62,7 @@ func GetProvider() *ujconfig.Provider {
 		image_policy.Configure,
 		integration.Configure,
 		kubernetes_secret.Configure,
+		kustomization.Configure,
 		
 	} {
 		configure(pc)
