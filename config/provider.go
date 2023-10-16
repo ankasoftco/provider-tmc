@@ -20,6 +20,7 @@ import (
 	git_repository "github.com/ankasoftco/provider-tmc/config/git_repository"
 	iam_policy "github.com/ankasoftco/provider-tmc/config/iam_policy"
 	image_policy "github.com/ankasoftco/provider-tmc/config/image_policy"
+	integration "github.com/ankasoftco/provider-tmc/config/integration"
 
 
 )
@@ -57,6 +58,7 @@ func GetProvider() *ujconfig.Provider {
 		git_repository.Configure,
 		iam_policy.Configure,
 		image_policy.Configure,
+		integration.Configure,
 		
 	} {
 		configure(pc)
