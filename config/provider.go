@@ -24,6 +24,7 @@ import (
 	kubernetes_secret "github.com/ankasoftco/provider-tmc/config/kubernetes_secret"
 	kustomization "github.com/ankasoftco/provider-tmc/config/kustomization"
 	namespace "github.com/ankasoftco/provider-tmc/config/namespace"
+	namespace_quota_policy "github.com/ankasoftco/provider-tmc/config/namespace_quota_policy"
 )
 
 const (
@@ -63,6 +64,7 @@ func GetProvider() *ujconfig.Provider {
 		kubernetes_secret.Configure,
 		kustomization.Configure,
 		namespace.Configure,
+		namespace_quota_policy.Configure,
 	} {
 		configure(pc)
 	}
