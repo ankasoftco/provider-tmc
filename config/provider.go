@@ -23,6 +23,7 @@ import (
 	integration "github.com/ankasoftco/provider-tmc/config/integration"
 	kubernetes_secret "github.com/ankasoftco/provider-tmc/config/kubernetes_secret"
 	kustomization "github.com/ankasoftco/provider-tmc/config/kustomization"
+	namespace "github.com/ankasoftco/provider-tmc/config/namespace"
 
 
 )
@@ -63,7 +64,7 @@ func GetProvider() *ujconfig.Provider {
 		integration.Configure,
 		kubernetes_secret.Configure,
 		kustomization.Configure,
-		
+		name
 	} {
 		configure(pc)
 	}
