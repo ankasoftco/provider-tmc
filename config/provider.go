@@ -25,6 +25,7 @@ import (
 	kustomization "github.com/ankasoftco/provider-tmc/config/kustomization"
 	namespace "github.com/ankasoftco/provider-tmc/config/namespace"
 	namespace_quota_policy "github.com/ankasoftco/provider-tmc/config/namespace_quota_policy"
+	network_policy "github.com/ankasoftco/provider-tmc/config/network_policy"
 )
 
 const (
@@ -65,6 +66,7 @@ func GetProvider() *ujconfig.Provider {
 		kustomization.Configure,
 		namespace.Configure,
 		namespace_quota_policy.Configure,
+		network_policy.Configure,
 	} {
 		configure(pc)
 	}
