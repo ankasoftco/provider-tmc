@@ -16,6 +16,8 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"tanzu-mission-control_cluster_node_pool": config.IdentifierFromProvider,
 	"tanzu-mission-control_credential":       config.IdentifierFromProvider,
 	"tanzu-mission-control_custom_policy":	config.IdentifierFromProvider,
+	"tanzu-mission-control_ekscluster":        config.IdentifierFromProvider,
+
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the

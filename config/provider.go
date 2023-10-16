@@ -15,6 +15,8 @@ import (
 	cluster_group "github.com/ankasoftco/provider-tmc/config/cluster_group"
 	cluster_node_pool "github.com/ankasoftco/provider-tmc/config/cluster_node_pool"
 	credential "github.com/ankasoftco/provider-tmc/config/credential"
+	custom_policy "github.com/ankasoftco/provider-tmc/config/custom_policy"
+	ekscluster "github.com/ankasoftco/provider-tmc/config/ekscluster"
 
 
 )
@@ -47,6 +49,8 @@ func GetProvider() *ujconfig.Provider {
 		cluster_group.Configure,
 		cluster_node_pool.Configure,
 		credential.Configure,
+		custom_policy.Configure,
+		ekscluster.Configure,
 		
 	} {
 		configure(pc)
