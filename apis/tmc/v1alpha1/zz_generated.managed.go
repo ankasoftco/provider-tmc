@@ -158,3 +158,155 @@ func (mg *Cluster) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetail
 func (mg *Cluster) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
+
+// GetCondition of this Cluster_Group.
+func (mg *Cluster_Group) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this Cluster_Group.
+func (mg *Cluster_Group) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicy of this Cluster_Group.
+func (mg *Cluster_Group) GetManagementPolicy() xpv1.ManagementPolicy {
+	return mg.Spec.ManagementPolicy
+}
+
+// GetProviderConfigReference of this Cluster_Group.
+func (mg *Cluster_Group) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+/*
+GetProviderReference of this Cluster_Group.
+Deprecated: Use GetProviderConfigReference.
+*/
+func (mg *Cluster_Group) GetProviderReference() *xpv1.Reference {
+	return mg.Spec.ProviderReference
+}
+
+// GetPublishConnectionDetailsTo of this Cluster_Group.
+func (mg *Cluster_Group) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+	return mg.Spec.PublishConnectionDetailsTo
+}
+
+// GetWriteConnectionSecretToReference of this Cluster_Group.
+func (mg *Cluster_Group) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this Cluster_Group.
+func (mg *Cluster_Group) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this Cluster_Group.
+func (mg *Cluster_Group) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicy of this Cluster_Group.
+func (mg *Cluster_Group) SetManagementPolicy(r xpv1.ManagementPolicy) {
+	mg.Spec.ManagementPolicy = r
+}
+
+// SetProviderConfigReference of this Cluster_Group.
+func (mg *Cluster_Group) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+/*
+SetProviderReference of this Cluster_Group.
+Deprecated: Use SetProviderConfigReference.
+*/
+func (mg *Cluster_Group) SetProviderReference(r *xpv1.Reference) {
+	mg.Spec.ProviderReference = r
+}
+
+// SetPublishConnectionDetailsTo of this Cluster_Group.
+func (mg *Cluster_Group) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+	mg.Spec.PublishConnectionDetailsTo = r
+}
+
+// SetWriteConnectionSecretToReference of this Cluster_Group.
+func (mg *Cluster_Group) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this Cluster_Node_Pool.
+func (mg *Cluster_Node_Pool) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this Cluster_Node_Pool.
+func (mg *Cluster_Node_Pool) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicy of this Cluster_Node_Pool.
+func (mg *Cluster_Node_Pool) GetManagementPolicy() xpv1.ManagementPolicy {
+	return mg.Spec.ManagementPolicy
+}
+
+// GetProviderConfigReference of this Cluster_Node_Pool.
+func (mg *Cluster_Node_Pool) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+/*
+GetProviderReference of this Cluster_Node_Pool.
+Deprecated: Use GetProviderConfigReference.
+*/
+func (mg *Cluster_Node_Pool) GetProviderReference() *xpv1.Reference {
+	return mg.Spec.ProviderReference
+}
+
+// GetPublishConnectionDetailsTo of this Cluster_Node_Pool.
+func (mg *Cluster_Node_Pool) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+	return mg.Spec.PublishConnectionDetailsTo
+}
+
+// GetWriteConnectionSecretToReference of this Cluster_Node_Pool.
+func (mg *Cluster_Node_Pool) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this Cluster_Node_Pool.
+func (mg *Cluster_Node_Pool) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this Cluster_Node_Pool.
+func (mg *Cluster_Node_Pool) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicy of this Cluster_Node_Pool.
+func (mg *Cluster_Node_Pool) SetManagementPolicy(r xpv1.ManagementPolicy) {
+	mg.Spec.ManagementPolicy = r
+}
+
+// SetProviderConfigReference of this Cluster_Node_Pool.
+func (mg *Cluster_Node_Pool) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+/*
+SetProviderReference of this Cluster_Node_Pool.
+Deprecated: Use SetProviderConfigReference.
+*/
+func (mg *Cluster_Node_Pool) SetProviderReference(r *xpv1.Reference) {
+	mg.Spec.ProviderReference = r
+}
+
+// SetPublishConnectionDetailsTo of this Cluster_Node_Pool.
+func (mg *Cluster_Node_Pool) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+	mg.Spec.PublishConnectionDetailsTo = r
+}
+
+// SetWriteConnectionSecretToReference of this Cluster_Node_Pool.
+func (mg *Cluster_Node_Pool) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}

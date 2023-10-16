@@ -24,3 +24,21 @@ func (l *ClusterList) GetItems() []resource.Managed {
 	}
 	return items
 }
+
+// GetItems of this Cluster_GroupList.
+func (l *Cluster_GroupList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this Cluster_Node_PoolList.
+func (l *Cluster_Node_PoolList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
