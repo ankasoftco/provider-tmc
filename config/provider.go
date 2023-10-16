@@ -14,6 +14,7 @@ import (
 	cluster "github.com/ankasoftco/provider-tmc/config/cluster"
 	cluster_group "github.com/ankasoftco/provider-tmc/config/cluster_group"
 	cluster_node_pool "github.com/ankasoftco/provider-tmc/config/cluster_node_pool"
+	control_credential "github.com/ankasoftco/provider-tmc/config/control_credential"
 
 
 )
@@ -45,6 +46,7 @@ func GetProvider() *ujconfig.Provider {
 		cluster.Configure,
 		cluster_group.Configure,
 		cluster_node_pool.Configure,
+		control_credential.Configure,
 		
 	} {
 		configure(pc)
