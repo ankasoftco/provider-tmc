@@ -17,6 +17,7 @@ import (
 	credential "github.com/ankasoftco/provider-tmc/config/credential"
 	custom_policy "github.com/ankasoftco/provider-tmc/config/custom_policy"
 	ekscluster "github.com/ankasoftco/provider-tmc/config/ekscluster"
+	git_repository "github.com/ankasoftco/provider-tmc/config/git_repository"
 
 
 )
@@ -51,6 +52,7 @@ func GetProvider() *ujconfig.Provider {
 		credential.Configure,
 		custom_policy.Configure,
 		ekscluster.Configure,
+		git_repository.Configure,
 		
 	} {
 		configure(pc)
