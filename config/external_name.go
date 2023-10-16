@@ -19,6 +19,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"tanzu-mission-control_ekscluster":        config.IdentifierFromProvider,
 	"tanzu-mission-control_git_repository":        config.IdentifierFromProvider,
 	"tanzu-mission-control_iam_policy":		config.IdentifierFromProvider,
+	"tanzu-mission-control_image_policy":        config.IdentifierFromProvider,
 
 
 }

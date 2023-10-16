@@ -19,6 +19,7 @@ import (
 	ekscluster "github.com/ankasoftco/provider-tmc/config/ekscluster"
 	git_repository "github.com/ankasoftco/provider-tmc/config/git_repository"
 	iam_policy "github.com/ankasoftco/provider-tmc/config/iam_policy"
+	image_policy "github.com/ankasoftco/provider-tmc/config/image_policy"
 
 
 )
@@ -55,6 +56,7 @@ func GetProvider() *ujconfig.Provider {
 		ekscluster.Configure,
 		git_repository.Configure,
 		iam_policy.Configure,
+		image_policy.Configure,
 		
 	} {
 		configure(pc)
