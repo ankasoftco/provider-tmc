@@ -18,6 +18,7 @@ import (
 	custom_policy "github.com/ankasoftco/provider-tmc/config/custom_policy"
 	ekscluster "github.com/ankasoftco/provider-tmc/config/ekscluster"
 	git_repository "github.com/ankasoftco/provider-tmc/config/git_repository"
+	iam_policy "github.com/ankasoftco/provider-tmc/config/iam_policy"
 
 
 )
@@ -53,6 +54,7 @@ func GetProvider() *ujconfig.Provider {
 		custom_policy.Configure,
 		ekscluster.Configure,
 		git_repository.Configure,
+		iam_policy.Configure,
 		
 	} {
 		configure(pc)
