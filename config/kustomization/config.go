@@ -8,4 +8,5 @@ func Configure(p *config.Provider) {
 		r.ShortGroup = "tmc"
 		r.Kind = "Kustomization"
 		r.Version = "v1alpha1"
-	}
+	})
+}
