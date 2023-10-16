@@ -21,6 +21,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"tanzu-mission-control_iam_policy":		config.IdentifierFromProvider,
 	"tanzu-mission-control_image_policy":        config.IdentifierFromProvider,
 	"tanzu-mission-control_integration":		config.IdentifierFromProvider,
+	"tanzu-mission-control_kubernetes_secret":		config.IdentifierFromProvider,
 
 
 }
