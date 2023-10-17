@@ -24,6 +24,13 @@ import (
 	kubernetes_secret "github.com/ankasoftco/provider-tmc/internal/controller/tmc/kubernetes_secret"
 	kustomization "github.com/ankasoftco/provider-tmc/internal/controller/tmc/kustomization"
 	namespace "github.com/ankasoftco/provider-tmc/internal/controller/tmc/namespace"
+	namespace_quota_policy "github.com/ankasoftco/provider-tmc/internal/controller/tmc/namespace_quota_policy"
+	network_policy "github.com/ankasoftco/provider-tmc/internal/controller/tmc/network_policy"
+	package_install "github.com/ankasoftco/provider-tmc/internal/controller/tmc/package_install"
+	package_repository "github.com/ankasoftco/provider-tmc/internal/controller/tmc/package_repository"
+	repository_credential "github.com/ankasoftco/provider-tmc/internal/controller/tmc/repository_credential"
+	security_policy "github.com/ankasoftco/provider-tmc/internal/controller/tmc/security_policy"
+	workspace "github.com/ankasoftco/provider-tmc/internal/controller/tmc/workspace"
 )
 
 // Setup creates all controllers with the supplied logger and adds them to
@@ -45,6 +52,13 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		kubernetes_secret.Setup,
 		kustomization.Setup,
 		namespace.Setup,
+		namespace_quota_policy.Setup,
+		network_policy.Setup,
+		package_install.Setup,
+		package_repository.Setup,
+		repository_credential.Setup,
+		security_policy.Setup,
+		workspace.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {
 			return err

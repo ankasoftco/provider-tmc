@@ -1048,3 +1048,521 @@ func (tr *Namespace) LateInitialize(attrs []byte) (bool, error) {
 func (tr *Namespace) GetTerraformSchemaVersion() int {
 	return 0
 }
+
+// GetTerraformResourceType returns Terraform resource type for this Namespace_Quota_Policy
+func (mg *Namespace_Quota_Policy) GetTerraformResourceType() string {
+	return "tanzu-mission-control_namespace_quota_policy"
+}
+
+// GetConnectionDetailsMapping for this Namespace_Quota_Policy
+func (tr *Namespace_Quota_Policy) GetConnectionDetailsMapping() map[string]string {
+	return nil
+}
+
+// GetObservation of this Namespace_Quota_Policy
+func (tr *Namespace_Quota_Policy) GetObservation() (map[string]any, error) {
+	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(o, &base)
+}
+
+// SetObservation for this Namespace_Quota_Policy
+func (tr *Namespace_Quota_Policy) SetObservation(obs map[string]any) error {
+	p, err := json.TFParser.Marshal(obs)
+	if err != nil {
+		return err
+	}
+	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
+}
+
+// GetID returns ID of underlying Terraform resource of this Namespace_Quota_Policy
+func (tr *Namespace_Quota_Policy) GetID() string {
+	if tr.Status.AtProvider.ID == nil {
+		return ""
+	}
+	return *tr.Status.AtProvider.ID
+}
+
+// GetParameters of this Namespace_Quota_Policy
+func (tr *Namespace_Quota_Policy) GetParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
+}
+
+// SetParameters for this Namespace_Quota_Policy
+func (tr *Namespace_Quota_Policy) SetParameters(params map[string]any) error {
+	p, err := json.TFParser.Marshal(params)
+	if err != nil {
+		return err
+	}
+	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
+}
+
+// LateInitialize this Namespace_Quota_Policy using its observed tfState.
+// returns True if there are any spec changes for the resource.
+func (tr *Namespace_Quota_Policy) LateInitialize(attrs []byte) (bool, error) {
+	params := &Namespace_Quota_PolicyParameters{}
+	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
+		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
+	}
+	opts := []resource.GenericLateInitializerOption{resource.WithZeroValueJSONOmitEmptyFilter(resource.CNameWildcard)}
+
+	li := resource.NewGenericLateInitializer(opts...)
+	return li.LateInitialize(&tr.Spec.ForProvider, params)
+}
+
+// GetTerraformSchemaVersion returns the associated Terraform schema version
+func (tr *Namespace_Quota_Policy) GetTerraformSchemaVersion() int {
+	return 0
+}
+
+// GetTerraformResourceType returns Terraform resource type for this Network_Policy
+func (mg *Network_Policy) GetTerraformResourceType() string {
+	return "tanzu-mission-control_network_policy"
+}
+
+// GetConnectionDetailsMapping for this Network_Policy
+func (tr *Network_Policy) GetConnectionDetailsMapping() map[string]string {
+	return nil
+}
+
+// GetObservation of this Network_Policy
+func (tr *Network_Policy) GetObservation() (map[string]any, error) {
+	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(o, &base)
+}
+
+// SetObservation for this Network_Policy
+func (tr *Network_Policy) SetObservation(obs map[string]any) error {
+	p, err := json.TFParser.Marshal(obs)
+	if err != nil {
+		return err
+	}
+	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
+}
+
+// GetID returns ID of underlying Terraform resource of this Network_Policy
+func (tr *Network_Policy) GetID() string {
+	if tr.Status.AtProvider.ID == nil {
+		return ""
+	}
+	return *tr.Status.AtProvider.ID
+}
+
+// GetParameters of this Network_Policy
+func (tr *Network_Policy) GetParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
+}
+
+// SetParameters for this Network_Policy
+func (tr *Network_Policy) SetParameters(params map[string]any) error {
+	p, err := json.TFParser.Marshal(params)
+	if err != nil {
+		return err
+	}
+	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
+}
+
+// LateInitialize this Network_Policy using its observed tfState.
+// returns True if there are any spec changes for the resource.
+func (tr *Network_Policy) LateInitialize(attrs []byte) (bool, error) {
+	params := &Network_PolicyParameters{}
+	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
+		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
+	}
+	opts := []resource.GenericLateInitializerOption{resource.WithZeroValueJSONOmitEmptyFilter(resource.CNameWildcard)}
+
+	li := resource.NewGenericLateInitializer(opts...)
+	return li.LateInitialize(&tr.Spec.ForProvider, params)
+}
+
+// GetTerraformSchemaVersion returns the associated Terraform schema version
+func (tr *Network_Policy) GetTerraformSchemaVersion() int {
+	return 0
+}
+
+// GetTerraformResourceType returns Terraform resource type for this Package_Install
+func (mg *Package_Install) GetTerraformResourceType() string {
+	return "tanzu-mission-control_package_install"
+}
+
+// GetConnectionDetailsMapping for this Package_Install
+func (tr *Package_Install) GetConnectionDetailsMapping() map[string]string {
+	return map[string]string{"spec[*].inline_values": "spec.forProvider.spec[*].inlineValuesSecretRef"}
+}
+
+// GetObservation of this Package_Install
+func (tr *Package_Install) GetObservation() (map[string]any, error) {
+	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(o, &base)
+}
+
+// SetObservation for this Package_Install
+func (tr *Package_Install) SetObservation(obs map[string]any) error {
+	p, err := json.TFParser.Marshal(obs)
+	if err != nil {
+		return err
+	}
+	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
+}
+
+// GetID returns ID of underlying Terraform resource of this Package_Install
+func (tr *Package_Install) GetID() string {
+	if tr.Status.AtProvider.ID == nil {
+		return ""
+	}
+	return *tr.Status.AtProvider.ID
+}
+
+// GetParameters of this Package_Install
+func (tr *Package_Install) GetParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
+}
+
+// SetParameters for this Package_Install
+func (tr *Package_Install) SetParameters(params map[string]any) error {
+	p, err := json.TFParser.Marshal(params)
+	if err != nil {
+		return err
+	}
+	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
+}
+
+// LateInitialize this Package_Install using its observed tfState.
+// returns True if there are any spec changes for the resource.
+func (tr *Package_Install) LateInitialize(attrs []byte) (bool, error) {
+	params := &Package_InstallParameters{}
+	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
+		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
+	}
+	opts := []resource.GenericLateInitializerOption{resource.WithZeroValueJSONOmitEmptyFilter(resource.CNameWildcard)}
+
+	li := resource.NewGenericLateInitializer(opts...)
+	return li.LateInitialize(&tr.Spec.ForProvider, params)
+}
+
+// GetTerraformSchemaVersion returns the associated Terraform schema version
+func (tr *Package_Install) GetTerraformSchemaVersion() int {
+	return 0
+}
+
+// GetTerraformResourceType returns Terraform resource type for this Package_Repository
+func (mg *Package_Repository) GetTerraformResourceType() string {
+	return "tanzu-mission-control_package_repository"
+}
+
+// GetConnectionDetailsMapping for this Package_Repository
+func (tr *Package_Repository) GetConnectionDetailsMapping() map[string]string {
+	return nil
+}
+
+// GetObservation of this Package_Repository
+func (tr *Package_Repository) GetObservation() (map[string]any, error) {
+	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(o, &base)
+}
+
+// SetObservation for this Package_Repository
+func (tr *Package_Repository) SetObservation(obs map[string]any) error {
+	p, err := json.TFParser.Marshal(obs)
+	if err != nil {
+		return err
+	}
+	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
+}
+
+// GetID returns ID of underlying Terraform resource of this Package_Repository
+func (tr *Package_Repository) GetID() string {
+	if tr.Status.AtProvider.ID == nil {
+		return ""
+	}
+	return *tr.Status.AtProvider.ID
+}
+
+// GetParameters of this Package_Repository
+func (tr *Package_Repository) GetParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
+}
+
+// SetParameters for this Package_Repository
+func (tr *Package_Repository) SetParameters(params map[string]any) error {
+	p, err := json.TFParser.Marshal(params)
+	if err != nil {
+		return err
+	}
+	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
+}
+
+// LateInitialize this Package_Repository using its observed tfState.
+// returns True if there are any spec changes for the resource.
+func (tr *Package_Repository) LateInitialize(attrs []byte) (bool, error) {
+	params := &Package_RepositoryParameters{}
+	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
+		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
+	}
+	opts := []resource.GenericLateInitializerOption{resource.WithZeroValueJSONOmitEmptyFilter(resource.CNameWildcard)}
+
+	li := resource.NewGenericLateInitializer(opts...)
+	return li.LateInitialize(&tr.Spec.ForProvider, params)
+}
+
+// GetTerraformSchemaVersion returns the associated Terraform schema version
+func (tr *Package_Repository) GetTerraformSchemaVersion() int {
+	return 0
+}
+
+// GetTerraformResourceType returns Terraform resource type for this Repository_Credential
+func (mg *Repository_Credential) GetTerraformResourceType() string {
+	return "tanzu-mission-control_repository_credential"
+}
+
+// GetConnectionDetailsMapping for this Repository_Credential
+func (tr *Repository_Credential) GetConnectionDetailsMapping() map[string]string {
+	return map[string]string{"spec[*].data[*].ssh_key[*].identity": "spec.forProvider.spec[*].data[*].sshKey[*].identitySecretRef", "spec[*].data[*].username_password[*].password": "spec.forProvider.spec[*].data[*].usernamePassword[*].passwordSecretRef"}
+}
+
+// GetObservation of this Repository_Credential
+func (tr *Repository_Credential) GetObservation() (map[string]any, error) {
+	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(o, &base)
+}
+
+// SetObservation for this Repository_Credential
+func (tr *Repository_Credential) SetObservation(obs map[string]any) error {
+	p, err := json.TFParser.Marshal(obs)
+	if err != nil {
+		return err
+	}
+	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
+}
+
+// GetID returns ID of underlying Terraform resource of this Repository_Credential
+func (tr *Repository_Credential) GetID() string {
+	if tr.Status.AtProvider.ID == nil {
+		return ""
+	}
+	return *tr.Status.AtProvider.ID
+}
+
+// GetParameters of this Repository_Credential
+func (tr *Repository_Credential) GetParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
+}
+
+// SetParameters for this Repository_Credential
+func (tr *Repository_Credential) SetParameters(params map[string]any) error {
+	p, err := json.TFParser.Marshal(params)
+	if err != nil {
+		return err
+	}
+	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
+}
+
+// LateInitialize this Repository_Credential using its observed tfState.
+// returns True if there are any spec changes for the resource.
+func (tr *Repository_Credential) LateInitialize(attrs []byte) (bool, error) {
+	params := &Repository_CredentialParameters{}
+	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
+		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
+	}
+	opts := []resource.GenericLateInitializerOption{resource.WithZeroValueJSONOmitEmptyFilter(resource.CNameWildcard)}
+
+	li := resource.NewGenericLateInitializer(opts...)
+	return li.LateInitialize(&tr.Spec.ForProvider, params)
+}
+
+// GetTerraformSchemaVersion returns the associated Terraform schema version
+func (tr *Repository_Credential) GetTerraformSchemaVersion() int {
+	return 0
+}
+
+// GetTerraformResourceType returns Terraform resource type for this Security_Policy
+func (mg *Security_Policy) GetTerraformResourceType() string {
+	return "tanzu-mission-control_security_policy"
+}
+
+// GetConnectionDetailsMapping for this Security_Policy
+func (tr *Security_Policy) GetConnectionDetailsMapping() map[string]string {
+	return nil
+}
+
+// GetObservation of this Security_Policy
+func (tr *Security_Policy) GetObservation() (map[string]any, error) {
+	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(o, &base)
+}
+
+// SetObservation for this Security_Policy
+func (tr *Security_Policy) SetObservation(obs map[string]any) error {
+	p, err := json.TFParser.Marshal(obs)
+	if err != nil {
+		return err
+	}
+	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
+}
+
+// GetID returns ID of underlying Terraform resource of this Security_Policy
+func (tr *Security_Policy) GetID() string {
+	if tr.Status.AtProvider.ID == nil {
+		return ""
+	}
+	return *tr.Status.AtProvider.ID
+}
+
+// GetParameters of this Security_Policy
+func (tr *Security_Policy) GetParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
+}
+
+// SetParameters for this Security_Policy
+func (tr *Security_Policy) SetParameters(params map[string]any) error {
+	p, err := json.TFParser.Marshal(params)
+	if err != nil {
+		return err
+	}
+	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
+}
+
+// LateInitialize this Security_Policy using its observed tfState.
+// returns True if there are any spec changes for the resource.
+func (tr *Security_Policy) LateInitialize(attrs []byte) (bool, error) {
+	params := &Security_PolicyParameters{}
+	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
+		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
+	}
+	opts := []resource.GenericLateInitializerOption{resource.WithZeroValueJSONOmitEmptyFilter(resource.CNameWildcard)}
+
+	li := resource.NewGenericLateInitializer(opts...)
+	return li.LateInitialize(&tr.Spec.ForProvider, params)
+}
+
+// GetTerraformSchemaVersion returns the associated Terraform schema version
+func (tr *Security_Policy) GetTerraformSchemaVersion() int {
+	return 0
+}
+
+// GetTerraformResourceType returns Terraform resource type for this Workspace
+func (mg *Workspace) GetTerraformResourceType() string {
+	return "tanzu-mission-control_workspace"
+}
+
+// GetConnectionDetailsMapping for this Workspace
+func (tr *Workspace) GetConnectionDetailsMapping() map[string]string {
+	return nil
+}
+
+// GetObservation of this Workspace
+func (tr *Workspace) GetObservation() (map[string]any, error) {
+	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(o, &base)
+}
+
+// SetObservation for this Workspace
+func (tr *Workspace) SetObservation(obs map[string]any) error {
+	p, err := json.TFParser.Marshal(obs)
+	if err != nil {
+		return err
+	}
+	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
+}
+
+// GetID returns ID of underlying Terraform resource of this Workspace
+func (tr *Workspace) GetID() string {
+	if tr.Status.AtProvider.ID == nil {
+		return ""
+	}
+	return *tr.Status.AtProvider.ID
+}
+
+// GetParameters of this Workspace
+func (tr *Workspace) GetParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
+}
+
+// SetParameters for this Workspace
+func (tr *Workspace) SetParameters(params map[string]any) error {
+	p, err := json.TFParser.Marshal(params)
+	if err != nil {
+		return err
+	}
+	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
+}
+
+// LateInitialize this Workspace using its observed tfState.
+// returns True if there are any spec changes for the resource.
+func (tr *Workspace) LateInitialize(attrs []byte) (bool, error) {
+	params := &WorkspaceParameters_2{}
+	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
+		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
+	}
+	opts := []resource.GenericLateInitializerOption{resource.WithZeroValueJSONOmitEmptyFilter(resource.CNameWildcard)}
+
+	li := resource.NewGenericLateInitializer(opts...)
+	return li.LateInitialize(&tr.Spec.ForProvider, params)
+}
+
+// GetTerraformSchemaVersion returns the associated Terraform schema version
+func (tr *Workspace) GetTerraformSchemaVersion() int {
+	return 0
+}
