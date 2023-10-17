@@ -27,6 +27,7 @@ import (
 	namespace_quota_policy "github.com/ankasoftco/provider-tmc/config/namespace_quota_policy"
 	network_policy "github.com/ankasoftco/provider-tmc/config/network_policy"
 	package_install "github.com/ankasoftco/provider-tmc/config/package_install"
+	package_repository "github.com/ankasoftco/provider-tmc/config/package_repository"
 )
 
 const (
@@ -68,6 +69,8 @@ func GetProvider() *ujconfig.Provider {
 		namespace.Configure,
 		namespace_quota_policy.Configure,
 		network_policy.Configure,
+		package_install.Configure,
+		package_repository.Configure,
 	} {
 		configure(pc)
 	}
