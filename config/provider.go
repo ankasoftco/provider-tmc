@@ -28,6 +28,7 @@ import (
 	network_policy "github.com/ankasoftco/provider-tmc/config/network_policy"
 	package_install "github.com/ankasoftco/provider-tmc/config/package_install"
 	package_repository "github.com/ankasoftco/provider-tmc/config/package_repository"
+	repository_credential "github.com/ankasoftco/provider-tmc/config/repository_credential"
 )
 
 const (
@@ -71,6 +72,7 @@ func GetProvider() *ujconfig.Provider {
 		network_policy.Configure,
 		package_install.Configure,
 		package_repository.Configure,
+		repository_credential.Configure,
 	} {
 		configure(pc)
 	}
