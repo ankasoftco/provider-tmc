@@ -30,6 +30,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"tanzu-mission-control_package_repository":		config.IdentifierFromProvider,
 	"tanzu-mission-control_repository_credential":		config.IdentifierFromProvider,
 	"tanzu-mission-control_security_policy":		config.IdentifierFromProvider,
+	"tanzu-mission-control_workspace":		config.IdentifierFromProvider,
 
 }
 
