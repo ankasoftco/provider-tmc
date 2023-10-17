@@ -26,6 +26,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"tanzu-mission-control_namespace":		config.IdentifierFromProvider,
 	"tanzu-mission-control_namespace_quota_policy":		config.IdentifierFromProvider,
 	"tanzu-mission-control_network_policy":		config.IdentifierFromProvider,
+	"tanzu-mission-control_package_install":		config.IdentifierFromProvider,
 
 }
 

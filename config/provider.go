@@ -26,6 +26,7 @@ import (
 	namespace "github.com/ankasoftco/provider-tmc/config/namespace"
 	namespace_quota_policy "github.com/ankasoftco/provider-tmc/config/namespace_quota_policy"
 	network_policy "github.com/ankasoftco/provider-tmc/config/network_policy"
+	package_install "github.com/ankasoftco/provider-tmc/config/package_install"
 )
 
 const (
