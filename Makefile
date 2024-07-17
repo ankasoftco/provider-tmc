@@ -8,10 +8,10 @@ export TERRAFORM_VERSION ?= 1.5.6
 
 export TERRAFORM_PROVIDER_SOURCE ?= vmware/tanzu-mission-control
 export TERRAFORM_PROVIDER_REPO ?= https://github.com/vmware/terraform-provider-tanzu-mission-control
-export TERRAFORM_PROVIDER_VERSION ?= 1.2.3
+export TERRAFORM_PROVIDER_VERSION ?= 1.4.4
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME ?= terraform-provider-tmc
 export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX ?= https://releases.hashicorp.com/$(TERRAFORM_PROVIDER_DOWNLOAD_NAME)/$(TERRAFORM_PROVIDER_VERSION)
-export TERRAFORM_NATIVE_PROVIDER_BINARY ?= terraform-provider-tmc_v1.2.3_x5
+export TERRAFORM_NATIVE_PROVIDER_BINARY ?= terraform-provider-tmc_v1.4.4_x5
 export TERRAFORM_DOCS_PATH ?= docs/resources
 
 
