@@ -16,6 +16,15 @@ func (l *AksClusterList) GetItems() []resource.Managed {
 	return items
 }
 
+// GetItems of this ClusterGroupList.
+func (l *ClusterGroupList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this ClusterList.
 func (l *ClusterList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
@@ -25,17 +34,8 @@ func (l *ClusterList) GetItems() []resource.Managed {
 	return items
 }
 
-// GetItems of this Cluster_GroupList.
-func (l *Cluster_GroupList) GetItems() []resource.Managed {
-	items := make([]resource.Managed, len(l.Items))
-	for i := range l.Items {
-		items[i] = &l.Items[i]
-	}
-	return items
-}
-
-// GetItems of this Cluster_Node_PoolList.
-func (l *Cluster_Node_PoolList) GetItems() []resource.Managed {
+// GetItems of this ClusterNodePoolList.
+func (l *ClusterNodePoolList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]
@@ -52,8 +52,8 @@ func (l *CredentialList) GetItems() []resource.Managed {
 	return items
 }
 
-// GetItems of this Custom_PolicyList.
-func (l *Custom_PolicyList) GetItems() []resource.Managed {
+// GetItems of this CustomPolicyList.
+func (l *CustomPolicyList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]
@@ -70,8 +70,8 @@ func (l *EKSClusterList) GetItems() []resource.Managed {
 	return items
 }
 
-// GetItems of this Git_RepositoryList.
-func (l *Git_RepositoryList) GetItems() []resource.Managed {
+// GetItems of this GitRepositoryList.
+func (l *GitRepositoryList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]
@@ -79,8 +79,8 @@ func (l *Git_RepositoryList) GetItems() []resource.Managed {
 	return items
 }
 
-// GetItems of this Iam_PolicyList.
-func (l *Iam_PolicyList) GetItems() []resource.Managed {
+// GetItems of this IamPolicyList.
+func (l *IamPolicyList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]
@@ -88,8 +88,8 @@ func (l *Iam_PolicyList) GetItems() []resource.Managed {
 	return items
 }
 
-// GetItems of this Image_PolicyList.
-func (l *Image_PolicyList) GetItems() []resource.Managed {
+// GetItems of this ImagePolicyList.
+func (l *ImagePolicyList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]
@@ -106,8 +106,8 @@ func (l *IntegrationList) GetItems() []resource.Managed {
 	return items
 }
 
-// GetItems of this Kubernetes_SecretList.
-func (l *Kubernetes_SecretList) GetItems() []resource.Managed {
+// GetItems of this KubernetesSecretList.
+func (l *KubernetesSecretList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]
@@ -133,8 +133,8 @@ func (l *NamespaceList) GetItems() []resource.Managed {
 	return items
 }
 
-// GetItems of this Namespace_Quota_PolicyList.
-func (l *Namespace_Quota_PolicyList) GetItems() []resource.Managed {
+// GetItems of this NamespaceQuotaPolicyList.
+func (l *NamespaceQuotaPolicyList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]
@@ -142,8 +142,8 @@ func (l *Namespace_Quota_PolicyList) GetItems() []resource.Managed {
 	return items
 }
 
-// GetItems of this Network_PolicyList.
-func (l *Network_PolicyList) GetItems() []resource.Managed {
+// GetItems of this NetworkPolicyList.
+func (l *NetworkPolicyList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]
@@ -151,8 +151,8 @@ func (l *Network_PolicyList) GetItems() []resource.Managed {
 	return items
 }
 
-// GetItems of this Package_InstallList.
-func (l *Package_InstallList) GetItems() []resource.Managed {
+// GetItems of this PackageInstallList.
+func (l *PackageInstallList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]
@@ -160,8 +160,8 @@ func (l *Package_InstallList) GetItems() []resource.Managed {
 	return items
 }
 
-// GetItems of this Package_RepositoryList.
-func (l *Package_RepositoryList) GetItems() []resource.Managed {
+// GetItems of this PackageRepositoryList.
+func (l *PackageRepositoryList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]
@@ -169,8 +169,8 @@ func (l *Package_RepositoryList) GetItems() []resource.Managed {
 	return items
 }
 
-// GetItems of this Repository_CredentialList.
-func (l *Repository_CredentialList) GetItems() []resource.Managed {
+// GetItems of this RepositoryCredentialList.
+func (l *RepositoryCredentialList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]
@@ -178,8 +178,8 @@ func (l *Repository_CredentialList) GetItems() []resource.Managed {
 	return items
 }
 
-// GetItems of this Security_PolicyList.
-func (l *Security_PolicyList) GetItems() []resource.Managed {
+// GetItems of this SecurityPolicyList.
+func (l *SecurityPolicyList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]

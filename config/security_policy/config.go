@@ -6,7 +6,7 @@ import "github.com/upbound/upjet/pkg/config"
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("tanzu-mission-control_security_policy", func(r *config.Resource) {
 		r.ShortGroup = "tmc"
-		r.Kind = "Security_Policy"
+		r.Kind = "SecurityPolicy"
 		r.Version = "v1alpha1"
 	})
 }

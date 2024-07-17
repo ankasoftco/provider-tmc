@@ -7,7 +7,7 @@ import "github.com/upbound/upjet/pkg/config"
 func Configure(p *config.Provider) {
     p.AddResourceConfigurator("tanzu-mission-control_git_repository", func(r *config.Resource) {
 		r.ShortGroup = "tmc"
-		r.Kind = "Git_Repository"
+		r.Kind = "GitRepository"
 		r.Version = "v1alpha1"
     })
 }

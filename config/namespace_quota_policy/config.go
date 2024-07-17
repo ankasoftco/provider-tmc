@@ -6,7 +6,7 @@ import "github.com/upbound/upjet/pkg/config"
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("tanzu-mission-control_namespace_quota_policy", func(r *config.Resource) {
 		r.ShortGroup = "tmc"
-		r.Kind = "Namespace_Quota_Policy"
+		r.Kind = "NamespaceQuotaPolicy"
 		r.Version = "v1alpha1"
 	})
 }

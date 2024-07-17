@@ -6,7 +6,7 @@ import "github.com/upbound/upjet/pkg/config"
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("tanzu-mission-control_package_repository", func(r *config.Resource) {
 		r.ShortGroup = "tmc"
-		r.Kind = "Package_Repository"
+		r.Kind = "PackageRepository"
 		r.Version = "v1alpha1"
 	})
 }

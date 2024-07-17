@@ -12,24 +12,24 @@ import (
 	providerconfig "github.com/ankasoftco/provider-tmc/internal/controller/providerconfig"
 	akscluster "github.com/ankasoftco/provider-tmc/internal/controller/tmc/akscluster"
 	cluster "github.com/ankasoftco/provider-tmc/internal/controller/tmc/cluster"
-	cluster_group "github.com/ankasoftco/provider-tmc/internal/controller/tmc/cluster_group"
-	cluster_node_pool "github.com/ankasoftco/provider-tmc/internal/controller/tmc/cluster_node_pool"
+	clustergroup "github.com/ankasoftco/provider-tmc/internal/controller/tmc/clustergroup"
+	clusternodepool "github.com/ankasoftco/provider-tmc/internal/controller/tmc/clusternodepool"
 	credential "github.com/ankasoftco/provider-tmc/internal/controller/tmc/credential"
-	custom_policy "github.com/ankasoftco/provider-tmc/internal/controller/tmc/custom_policy"
+	custompolicy "github.com/ankasoftco/provider-tmc/internal/controller/tmc/custompolicy"
 	ekscluster "github.com/ankasoftco/provider-tmc/internal/controller/tmc/ekscluster"
-	git_repository "github.com/ankasoftco/provider-tmc/internal/controller/tmc/git_repository"
-	iam_policy "github.com/ankasoftco/provider-tmc/internal/controller/tmc/iam_policy"
-	image_policy "github.com/ankasoftco/provider-tmc/internal/controller/tmc/image_policy"
+	gitrepository "github.com/ankasoftco/provider-tmc/internal/controller/tmc/gitrepository"
+	iampolicy "github.com/ankasoftco/provider-tmc/internal/controller/tmc/iampolicy"
+	imagepolicy "github.com/ankasoftco/provider-tmc/internal/controller/tmc/imagepolicy"
 	integration "github.com/ankasoftco/provider-tmc/internal/controller/tmc/integration"
-	kubernetes_secret "github.com/ankasoftco/provider-tmc/internal/controller/tmc/kubernetes_secret"
+	kubernetessecret "github.com/ankasoftco/provider-tmc/internal/controller/tmc/kubernetessecret"
 	kustomization "github.com/ankasoftco/provider-tmc/internal/controller/tmc/kustomization"
 	namespace "github.com/ankasoftco/provider-tmc/internal/controller/tmc/namespace"
-	namespace_quota_policy "github.com/ankasoftco/provider-tmc/internal/controller/tmc/namespace_quota_policy"
-	network_policy "github.com/ankasoftco/provider-tmc/internal/controller/tmc/network_policy"
-	package_install "github.com/ankasoftco/provider-tmc/internal/controller/tmc/package_install"
-	package_repository "github.com/ankasoftco/provider-tmc/internal/controller/tmc/package_repository"
-	repository_credential "github.com/ankasoftco/provider-tmc/internal/controller/tmc/repository_credential"
-	security_policy "github.com/ankasoftco/provider-tmc/internal/controller/tmc/security_policy"
+	namespacequotapolicy "github.com/ankasoftco/provider-tmc/internal/controller/tmc/namespacequotapolicy"
+	networkpolicy "github.com/ankasoftco/provider-tmc/internal/controller/tmc/networkpolicy"
+	packageinstall "github.com/ankasoftco/provider-tmc/internal/controller/tmc/packageinstall"
+	packagerepository "github.com/ankasoftco/provider-tmc/internal/controller/tmc/packagerepository"
+	repositorycredential "github.com/ankasoftco/provider-tmc/internal/controller/tmc/repositorycredential"
+	securitypolicy "github.com/ankasoftco/provider-tmc/internal/controller/tmc/securitypolicy"
 	workspace "github.com/ankasoftco/provider-tmc/internal/controller/tmc/workspace"
 )
 
@@ -40,24 +40,24 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		providerconfig.Setup,
 		akscluster.Setup,
 		cluster.Setup,
-		cluster_group.Setup,
-		cluster_node_pool.Setup,
+		clustergroup.Setup,
+		clusternodepool.Setup,
 		credential.Setup,
-		custom_policy.Setup,
+		custompolicy.Setup,
 		ekscluster.Setup,
-		git_repository.Setup,
-		iam_policy.Setup,
-		image_policy.Setup,
+		gitrepository.Setup,
+		iampolicy.Setup,
+		imagepolicy.Setup,
 		integration.Setup,
-		kubernetes_secret.Setup,
+		kubernetessecret.Setup,
 		kustomization.Setup,
 		namespace.Setup,
-		namespace_quota_policy.Setup,
-		network_policy.Setup,
-		package_install.Setup,
-		package_repository.Setup,
-		repository_credential.Setup,
-		security_policy.Setup,
+		namespacequotapolicy.Setup,
+		networkpolicy.Setup,
+		packageinstall.Setup,
+		packagerepository.Setup,
+		repositorycredential.Setup,
+		securitypolicy.Setup,
 		workspace.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {
