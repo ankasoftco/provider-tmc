@@ -89,13 +89,13 @@ type KubernetesSecretObservation struct {
 	// ID of Organization.
 	OrgID *string `json:"orgId,omitempty" tf:"org_id,omitempty"`
 
-	// Scope for the secret having one of the valid scopes for secret: currently we have only cluster scope
+	// Scope for the kubernetes secret, having one of the valid scopes: cluster, cluster_group.
 	Scope []KubernetesSecretScopeObservation `json:"scope,omitempty" tf:"scope,omitempty"`
 
 	// Spec for the kubernetes secret
 	Spec []KubernetesSecretSpecObservation `json:"spec,omitempty" tf:"spec,omitempty"`
 
-	// Status for the Secret Export.
+	// Status for the kubernetes Secret.
 	Status map[string]*string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
@@ -121,7 +121,7 @@ type KubernetesSecretParameters struct {
 	// +kubebuilder:validation:Optional
 	OrgID *string `json:"orgId,omitempty" tf:"org_id,omitempty"`
 
-	// Scope for the secret having one of the valid scopes for secret: currently we have only cluster scope
+	// Scope for the kubernetes secret, having one of the valid scopes: cluster, cluster_group.
 	// +kubebuilder:validation:Optional
 	Scope []KubernetesSecretScopeParameters `json:"scope,omitempty" tf:"scope,omitempty"`
 
@@ -130,13 +130,26 @@ type KubernetesSecretParameters struct {
 	Spec []KubernetesSecretSpecParameters `json:"spec,omitempty" tf:"spec,omitempty"`
 }
 
-type KubernetesSecretScopeClusterObservation struct {
+type KubernetesSecretScopeClusterGroupObservation struct {
 
-	// Name of this cluster
-	ClusterName *string `json:"clusterName,omitempty" tf:"cluster_name,omitempty"`
+	// Name of the cluster group
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+}
+
+type KubernetesSecretScopeClusterGroupParameters struct {
+
+	// Name of the cluster group
+	// +kubebuilder:validation:Required
+	Name *string `json:"name" tf:"name,omitempty"`
+}
+
+type KubernetesSecretScopeClusterObservation struct {
 
 	// Name of the management cluster
 	ManagementClusterName *string `json:"managementClusterName,omitempty" tf:"management_cluster_name,omitempty"`
+
+	// Name of this cluster
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Provisioner of the cluster
 	ProvisionerName *string `json:"provisionerName,omitempty" tf:"provisioner_name,omitempty"`
@@ -144,13 +157,13 @@ type KubernetesSecretScopeClusterObservation struct {
 
 type KubernetesSecretScopeClusterParameters struct {
 
-	// Name of this cluster
-	// +kubebuilder:validation:Required
-	ClusterName *string `json:"clusterName" tf:"cluster_name,omitempty"`
-
 	// Name of the management cluster
 	// +kubebuilder:validation:Optional
 	ManagementClusterName *string `json:"managementClusterName,omitempty" tf:"management_cluster_name,omitempty"`
+
+	// Name of this cluster
+	// +kubebuilder:validation:Required
+	Name *string `json:"name" tf:"name,omitempty"`
 
 	// Provisioner of the cluster
 	// +kubebuilder:validation:Optional
@@ -159,15 +172,22 @@ type KubernetesSecretScopeClusterParameters struct {
 
 type KubernetesSecretScopeObservation struct {
 
-	// The schema for cluster secret full name
+	// The schema for cluster full name
 	Cluster []KubernetesSecretScopeClusterObservation `json:"cluster,omitempty" tf:"cluster,omitempty"`
+
+	// The schema for cluster group full name
+	ClusterGroup []KubernetesSecretScopeClusterGroupObservation `json:"clusterGroup,omitempty" tf:"cluster_group,omitempty"`
 }
 
 type KubernetesSecretScopeParameters struct {
 
-	// The schema for cluster secret full name
+	// The schema for cluster full name
 	// +kubebuilder:validation:Optional
 	Cluster []KubernetesSecretScopeClusterParameters `json:"cluster,omitempty" tf:"cluster,omitempty"`
+
+	// The schema for cluster group full name
+	// +kubebuilder:validation:Optional
+	ClusterGroup []KubernetesSecretScopeClusterGroupParameters `json:"clusterGroup,omitempty" tf:"cluster_group,omitempty"`
 }
 
 type KubernetesSecretSpecObservation struct {
@@ -179,8 +199,12 @@ type KubernetesSecretSpecObservation struct {
 type KubernetesSecretSpecParameters struct {
 
 	// SecretType definition - SECRET_TYPE_DOCKERCONFIGJSON, Kubernetes secrets type.
-	// +kubebuilder:validation:Required
-	DockerConfigJSON []DockerConfigJSONParameters `json:"dockerConfigJson" tf:"docker_config_json,omitempty"`
+	// +kubebuilder:validation:Optional
+	DockerConfigJSON []DockerConfigJSONParameters `json:"dockerConfigJson,omitempty" tf:"docker_config_json,omitempty"`
+
+	// SecretType definition - SECRET_TYPE_OPAQUE, Kubernetes secrets type.
+	// +kubebuilder:validation:Optional
+	OpaqueSecretRef *v1.SecretReference `json:"opaqueSecretRef,omitempty" tf:"-"`
 }
 
 // KubernetesSecretSpec defines the desired state of KubernetesSecret

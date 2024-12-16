@@ -309,7 +309,7 @@ type SecurityPolicyObservation struct {
 	// Name of the security policy
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Scope for the custom, security, image, network and namespace quota policy, having one of the valid scopes for custom, security and namespace quota policy: cluster, cluster_group or organization and valid scopes for image and network policy: workspace or organization.
+	// Scope for the custom, security, image, network, namespace quota and mutation policy, having one of the valid scopes for custom, security, mutation, and namespace quota policy: cluster, cluster_group or organization and valid scopes for image and network policy: workspace or organization.
 	Scope []SecurityPolicyScopeObservation `json:"scope,omitempty" tf:"scope,omitempty"`
 
 	// Spec for the security policy
@@ -326,7 +326,7 @@ type SecurityPolicyParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Scope for the custom, security, image, network and namespace quota policy, having one of the valid scopes for custom, security and namespace quota policy: cluster, cluster_group or organization and valid scopes for image and network policy: workspace or organization.
+	// Scope for the custom, security, image, network, namespace quota and mutation policy, having one of the valid scopes for custom, security, mutation, and namespace quota policy: cluster, cluster_group or organization and valid scopes for image and network policy: workspace or organization.
 	// +kubebuilder:validation:Optional
 	Scope []SecurityPolicyScopeParameters `json:"scope,omitempty" tf:"scope,omitempty"`
 
@@ -435,94 +435,7 @@ type SecurityPolicyScopeWorkspaceParameters struct {
 	Workspace *string `json:"workspace" tf:"workspace,omitempty"`
 }
 
-type SecurityPolicySpecInputObservation struct {
-
-	// The input schema for security policy baseline recipe version v1
-	Baseline []BaselineObservation `json:"baseline,omitempty" tf:"baseline,omitempty"`
-
-	// The input schema for security policy custom recipe version v1
-	Custom []SpecInputCustomObservation `json:"custom,omitempty" tf:"custom,omitempty"`
-
-	// The input schema for security policy strict recipe version v1
-	Strict []StrictObservation `json:"strict,omitempty" tf:"strict,omitempty"`
-}
-
-type SecurityPolicySpecInputParameters struct {
-
-	// The input schema for security policy baseline recipe version v1
-	// +kubebuilder:validation:Optional
-	Baseline []BaselineParameters `json:"baseline,omitempty" tf:"baseline,omitempty"`
-
-	// The input schema for security policy custom recipe version v1
-	// +kubebuilder:validation:Optional
-	Custom []SpecInputCustomParameters `json:"custom,omitempty" tf:"custom,omitempty"`
-
-	// The input schema for security policy strict recipe version v1
-	// +kubebuilder:validation:Optional
-	Strict []StrictParameters `json:"strict,omitempty" tf:"strict,omitempty"`
-}
-
-type SecurityPolicySpecNamespaceSelectorMatchExpressionsObservation struct {
-
-	// Key is the label key that the selector applies to
-	Key *string `json:"key,omitempty" tf:"key,omitempty"`
-
-	// Operator represents a key's relationship to a set of values
-	Operator *string `json:"operator,omitempty" tf:"operator,omitempty"`
-
-	// Values is an array of string values
-	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
-}
-
-type SecurityPolicySpecNamespaceSelectorMatchExpressionsParameters struct {
-
-	// Key is the label key that the selector applies to
-	// +kubebuilder:validation:Optional
-	Key *string `json:"key,omitempty" tf:"key,omitempty"`
-
-	// Operator represents a key's relationship to a set of values
-	// +kubebuilder:validation:Optional
-	Operator *string `json:"operator,omitempty" tf:"operator,omitempty"`
-
-	// Values is an array of string values
-	// +kubebuilder:validation:Required
-	Values []*string `json:"values" tf:"values,omitempty"`
-}
-
-type SecurityPolicySpecNamespaceSelectorObservation struct {
-
-	// Match expressions is a list of label selector requirements, the requirements are ANDed
-	MatchExpressions []SecurityPolicySpecNamespaceSelectorMatchExpressionsObservation `json:"matchExpressions,omitempty" tf:"match_expressions,omitempty"`
-}
-
-type SecurityPolicySpecNamespaceSelectorParameters struct {
-
-	// Match expressions is a list of label selector requirements, the requirements are ANDed
-	// +kubebuilder:validation:Required
-	MatchExpressions []SecurityPolicySpecNamespaceSelectorMatchExpressionsParameters `json:"matchExpressions" tf:"match_expressions,omitempty"`
-}
-
-type SecurityPolicySpecObservation struct {
-
-	// Input for the security policy, having one of the valid recipes: baseline, custom or strict.
-	Input []SecurityPolicySpecInputObservation `json:"input,omitempty" tf:"input,omitempty"`
-
-	// Label based Namespace Selector for the policy
-	NamespaceSelector []SecurityPolicySpecNamespaceSelectorObservation `json:"namespaceSelector,omitempty" tf:"namespace_selector,omitempty"`
-}
-
-type SecurityPolicySpecParameters struct {
-
-	// Input for the security policy, having one of the valid recipes: baseline, custom or strict.
-	// +kubebuilder:validation:Required
-	Input []SecurityPolicySpecInputParameters `json:"input" tf:"input,omitempty"`
-
-	// Label based Namespace Selector for the policy
-	// +kubebuilder:validation:Optional
-	NamespaceSelector []SecurityPolicySpecNamespaceSelectorParameters `json:"namespaceSelector,omitempty" tf:"namespace_selector,omitempty"`
-}
-
-type SpecInputCustomObservation struct {
+type SecurityPolicySpecInputCustomObservation struct {
 
 	// Allow host namespace sharing
 	AllowHostNamespaceSharing *bool `json:"allowHostNamespaceSharing,omitempty" tf:"allow_host_namespace_sharing,omitempty"`
@@ -579,7 +492,7 @@ type SpecInputCustomObservation struct {
 	Sysctls []SysctlsObservation `json:"sysctls,omitempty" tf:"sysctls,omitempty"`
 }
 
-type SpecInputCustomParameters struct {
+type SecurityPolicySpecInputCustomParameters struct {
 
 	// Allow host namespace sharing
 	// +kubebuilder:validation:Optional
@@ -652,6 +565,93 @@ type SpecInputCustomParameters struct {
 	// Sysctls
 	// +kubebuilder:validation:Optional
 	Sysctls []SysctlsParameters `json:"sysctls,omitempty" tf:"sysctls,omitempty"`
+}
+
+type SecurityPolicySpecInputObservation struct {
+
+	// The input schema for security policy baseline recipe version v1
+	Baseline []BaselineObservation `json:"baseline,omitempty" tf:"baseline,omitempty"`
+
+	// The input schema for security policy custom recipe version v1
+	Custom []SecurityPolicySpecInputCustomObservation `json:"custom,omitempty" tf:"custom,omitempty"`
+
+	// The input schema for security policy strict recipe version v1
+	Strict []StrictObservation `json:"strict,omitempty" tf:"strict,omitempty"`
+}
+
+type SecurityPolicySpecInputParameters struct {
+
+	// The input schema for security policy baseline recipe version v1
+	// +kubebuilder:validation:Optional
+	Baseline []BaselineParameters `json:"baseline,omitempty" tf:"baseline,omitempty"`
+
+	// The input schema for security policy custom recipe version v1
+	// +kubebuilder:validation:Optional
+	Custom []SecurityPolicySpecInputCustomParameters `json:"custom,omitempty" tf:"custom,omitempty"`
+
+	// The input schema for security policy strict recipe version v1
+	// +kubebuilder:validation:Optional
+	Strict []StrictParameters `json:"strict,omitempty" tf:"strict,omitempty"`
+}
+
+type SecurityPolicySpecNamespaceSelectorMatchExpressionsObservation struct {
+
+	// Key is the label key that the selector applies to
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Operator represents a key's relationship to a set of values
+	Operator *string `json:"operator,omitempty" tf:"operator,omitempty"`
+
+	// Values is an array of string values
+	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
+}
+
+type SecurityPolicySpecNamespaceSelectorMatchExpressionsParameters struct {
+
+	// Key is the label key that the selector applies to
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Operator represents a key's relationship to a set of values
+	// +kubebuilder:validation:Optional
+	Operator *string `json:"operator,omitempty" tf:"operator,omitempty"`
+
+	// Values is an array of string values
+	// +kubebuilder:validation:Required
+	Values []*string `json:"values" tf:"values,omitempty"`
+}
+
+type SecurityPolicySpecNamespaceSelectorObservation struct {
+
+	// Match expressions is a list of label selector requirements, the requirements are ANDed
+	MatchExpressions []SecurityPolicySpecNamespaceSelectorMatchExpressionsObservation `json:"matchExpressions,omitempty" tf:"match_expressions,omitempty"`
+}
+
+type SecurityPolicySpecNamespaceSelectorParameters struct {
+
+	// Match expressions is a list of label selector requirements, the requirements are ANDed
+	// +kubebuilder:validation:Required
+	MatchExpressions []SecurityPolicySpecNamespaceSelectorMatchExpressionsParameters `json:"matchExpressions" tf:"match_expressions,omitempty"`
+}
+
+type SecurityPolicySpecObservation struct {
+
+	// Input for the security policy, having one of the valid recipes: baseline, custom or strict.
+	Input []SecurityPolicySpecInputObservation `json:"input,omitempty" tf:"input,omitempty"`
+
+	// Label based Namespace Selector for the policy
+	NamespaceSelector []SecurityPolicySpecNamespaceSelectorObservation `json:"namespaceSelector,omitempty" tf:"namespace_selector,omitempty"`
+}
+
+type SecurityPolicySpecParameters struct {
+
+	// Input for the security policy, having one of the valid recipes: baseline, custom or strict.
+	// +kubebuilder:validation:Required
+	Input []SecurityPolicySpecInputParameters `json:"input" tf:"input,omitempty"`
+
+	// Label based Namespace Selector for the policy
+	// +kubebuilder:validation:Optional
+	NamespaceSelector []SecurityPolicySpecNamespaceSelectorParameters `json:"namespaceSelector,omitempty" tf:"namespace_selector,omitempty"`
 }
 
 type StrictObservation struct {

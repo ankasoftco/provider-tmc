@@ -13,6 +13,40 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type CustomObservation struct {
+
+	// Audit (dry-run).
+	Audit *bool `json:"audit,omitempty" tf:"audit,omitempty"`
+
+	// JSON encoded template parameters.
+	Parameters *string `json:"parameters,omitempty" tf:"parameters,omitempty"`
+
+	// A list of kubernetes api resources on which the policy will be enforced, identified using apiGroups and kinds.
+	TargetKubernetesResources []TargetKubernetesResourcesObservation `json:"targetKubernetesResources,omitempty" tf:"target_kubernetes_resources,omitempty"`
+
+	// Name of custom template.
+	TemplateName *string `json:"templateName,omitempty" tf:"template_name,omitempty"`
+}
+
+type CustomParameters struct {
+
+	// Audit (dry-run).
+	// +kubebuilder:validation:Optional
+	Audit *bool `json:"audit,omitempty" tf:"audit,omitempty"`
+
+	// JSON encoded template parameters.
+	// +kubebuilder:validation:Optional
+	Parameters *string `json:"parameters,omitempty" tf:"parameters,omitempty"`
+
+	// A list of kubernetes api resources on which the policy will be enforced, identified using apiGroups and kinds.
+	// +kubebuilder:validation:Required
+	TargetKubernetesResources []TargetKubernetesResourcesParameters `json:"targetKubernetesResources" tf:"target_kubernetes_resources,omitempty"`
+
+	// Name of custom template.
+	// +kubebuilder:validation:Required
+	TemplateName *string `json:"templateName" tf:"template_name,omitempty"`
+}
+
 type CustomPolicyMetaObservation struct {
 
 	// Annotations for the resource
@@ -55,7 +89,7 @@ type CustomPolicyObservation struct {
 	// Name of the custom policy
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Scope for the custom, security, image, network and namespace quota policy, having one of the valid scopes for custom, security and namespace quota policy: cluster, cluster_group or organization and valid scopes for image and network policy: workspace or organization.
+	// Scope for the custom, security, image, network, namespace quota and mutation policy, having one of the valid scopes for custom, security, mutation, and namespace quota policy: cluster, cluster_group or organization and valid scopes for image and network policy: workspace or organization.
 	Scope []ScopeObservation `json:"scope,omitempty" tf:"scope,omitempty"`
 
 	// Spec for the custom policy
@@ -72,7 +106,7 @@ type CustomPolicyParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Scope for the custom, security, image, network and namespace quota policy, having one of the valid scopes for custom, security and namespace quota policy: cluster, cluster_group or organization and valid scopes for image and network policy: workspace or organization.
+	// Scope for the custom, security, image, network, namespace quota and mutation policy, having one of the valid scopes for custom, security, mutation, and namespace quota policy: cluster, cluster_group or organization and valid scopes for image and network policy: workspace or organization.
 	// +kubebuilder:validation:Optional
 	Scope []ScopeParameters `json:"scope,omitempty" tf:"scope,omitempty"`
 
@@ -83,7 +117,7 @@ type CustomPolicyParameters struct {
 
 type CustomPolicySpecObservation struct {
 
-	// Input for the custom policy, having one of the valid recipes: tmc_block_nodeport_service, tmc_block_resources, tmc_block_rolebinding_subjects, tmc_external_ips, tmc_https_ingress or tmc_require_labels.
+	// Input for the custom policy, having one of the valid recipes: [tmc_block_nodeport_service tmc_block_resources tmc_block_rolebinding_subjects tmc_external_ips tmc_https_ingress tmc_require_labels custom].
 	Input []InputObservation `json:"input,omitempty" tf:"input,omitempty"`
 
 	// Label based Namespace Selector for the policy
@@ -92,7 +126,7 @@ type CustomPolicySpecObservation struct {
 
 type CustomPolicySpecParameters struct {
 
-	// Input for the custom policy, having one of the valid recipes: tmc_block_nodeport_service, tmc_block_resources, tmc_block_rolebinding_subjects, tmc_external_ips, tmc_https_ingress or tmc_require_labels.
+	// Input for the custom policy, having one of the valid recipes: [tmc_block_nodeport_service tmc_block_resources tmc_block_rolebinding_subjects tmc_external_ips tmc_https_ingress tmc_require_labels custom].
 	// +kubebuilder:validation:Required
 	Input []InputParameters `json:"input" tf:"input,omitempty"`
 
@@ -123,6 +157,9 @@ type DisallowedSubjectsParameters struct {
 
 type InputObservation struct {
 
+	// The input schema for custom policy tmc_external_ips recipe version v1
+	Custom []CustomObservation `json:"custom,omitempty" tf:"custom,omitempty"`
+
 	// The input schema for custom policy tmc_block_nodeport_service recipe version v1
 	TmcBlockNodeportService []TmcBlockNodeportServiceObservation `json:"tmcBlockNodeportService,omitempty" tf:"tmc_block_nodeport_service,omitempty"`
 
@@ -143,6 +180,10 @@ type InputObservation struct {
 }
 
 type InputParameters struct {
+
+	// The input schema for custom policy tmc_external_ips recipe version v1
+	// +kubebuilder:validation:Optional
+	Custom []CustomParameters `json:"custom,omitempty" tf:"custom,omitempty"`
 
 	// The input schema for custom policy tmc_block_nodeport_service recipe version v1
 	// +kubebuilder:validation:Optional
@@ -368,7 +409,7 @@ type TmcBlockNodeportServiceObservation struct {
 	Audit *bool `json:"audit,omitempty" tf:"audit,omitempty"`
 
 	// A list of kubernetes api resources on which the policy will be enforced, identified using apiGroups and kinds.
-	TargetKubernetesResources []TargetKubernetesResourcesObservation `json:"targetKubernetesResources,omitempty" tf:"target_kubernetes_resources,omitempty"`
+	TargetKubernetesResources []TmcBlockNodeportServiceTargetKubernetesResourcesObservation `json:"targetKubernetesResources,omitempty" tf:"target_kubernetes_resources,omitempty"`
 }
 
 type TmcBlockNodeportServiceParameters struct {
@@ -379,7 +420,27 @@ type TmcBlockNodeportServiceParameters struct {
 
 	// A list of kubernetes api resources on which the policy will be enforced, identified using apiGroups and kinds.
 	// +kubebuilder:validation:Required
-	TargetKubernetesResources []TargetKubernetesResourcesParameters `json:"targetKubernetesResources" tf:"target_kubernetes_resources,omitempty"`
+	TargetKubernetesResources []TmcBlockNodeportServiceTargetKubernetesResourcesParameters `json:"targetKubernetesResources" tf:"target_kubernetes_resources,omitempty"`
+}
+
+type TmcBlockNodeportServiceTargetKubernetesResourcesObservation struct {
+
+	// APIGroup is a group containing the resource type.
+	APIGroups []*string `json:"apiGroups,omitempty" tf:"api_groups,omitempty"`
+
+	// Kind is the name of the object schema (resource type).
+	Kinds []*string `json:"kinds,omitempty" tf:"kinds,omitempty"`
+}
+
+type TmcBlockNodeportServiceTargetKubernetesResourcesParameters struct {
+
+	// APIGroup is a group containing the resource type.
+	// +kubebuilder:validation:Required
+	APIGroups []*string `json:"apiGroups" tf:"api_groups,omitempty"`
+
+	// Kind is the name of the object schema (resource type).
+	// +kubebuilder:validation:Required
+	Kinds []*string `json:"kinds" tf:"kinds,omitempty"`
 }
 
 type TmcBlockResourcesObservation struct {

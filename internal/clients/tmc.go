@@ -19,14 +19,6 @@ import (
 )
 
 const (
-	keyEndpoint         = "endpoint"
-	keyToken = "vmw_cloud_api_token"
-
-	envEndpoint          = "TMC_ENDPOINT"
-	envToken = "VMW_CLOUD_API_TOKEN"
-)
-
-const (
 	// error messages
 	errNoProviderConfig     = "no providerConfigRef provided"
 	errGetProviderConfig    = "cannot get referenced ProviderConfig"
@@ -34,6 +26,8 @@ const (
 	errExtractCredentials   = "cannot extract credentials"
 	errUnmarshalCredentials = "cannot unmarshal tmc credentials as JSON"
 )
+
+var reqFields = []string{"endpoint", "vmw_cloud_api_token"}
 
 // TerraformSetupBuilder builds Terraform a terraform.SetupFn function which
 // returns Terraform provider setup configuration
@@ -65,24 +59,18 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		if err != nil {
 			return ps, errors.Wrap(err, errExtractCredentials)
 		}
+
 		creds := map[string]string{}
 		if err := json.Unmarshal(data, &creds); err != nil {
 			return ps, errors.Wrap(err, errUnmarshalCredentials)
 		}
 
-		ps.Configuration = map[string]interface{}{}
-		if v, ok := creds[keyEndpoint]; ok {
-			ps.Configuration[keyEndpoint] = v
-		}
-		if v, ok := creds[keyToken]; ok {
-			ps.Configuration[keyToken] = v
+		ps.Configuration = map[string]any{}
+		// Required fields
+		for _, req := range reqFields {
+			ps.Configuration[req] = creds[req]
 		}
 
-		// Set credentials in Terraform provider configuration.
-		/*ps.Configuration = map[string]any{
-			"username": creds["username"],
-			"password": creds["password"],
-		}*/
 		return ps, nil
 	}
 }

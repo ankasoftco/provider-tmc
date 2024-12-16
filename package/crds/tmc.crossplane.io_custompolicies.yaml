@@ -90,11 +90,11 @@ spec:
                     description: Name of the custom policy
                     type: string
                   scope:
-                    description: 'Scope for the custom, security, image, network and
-                      namespace quota policy, having one of the valid scopes for custom,
-                      security and namespace quota policy: cluster, cluster_group
-                      or organization and valid scopes for image and network policy:
-                      workspace or organization.'
+                    description: 'Scope for the custom, security, image, network,
+                      namespace quota and mutation policy, having one of the valid
+                      scopes for custom, security, mutation, and namespace quota policy:
+                      cluster, cluster_group or organization and valid scopes for
+                      image and network policy: workspace or organization.'
                     items:
                       properties:
                         cluster:
@@ -155,11 +155,53 @@ spec:
                       properties:
                         input:
                           description: 'Input for the custom policy, having one of
-                            the valid recipes: tmc_block_nodeport_service, tmc_block_resources,
-                            tmc_block_rolebinding_subjects, tmc_external_ips, tmc_https_ingress
-                            or tmc_require_labels.'
+                            the valid recipes: [tmc_block_nodeport_service tmc_block_resources
+                            tmc_block_rolebinding_subjects tmc_external_ips tmc_https_ingress
+                            tmc_require_labels custom].'
                           items:
                             properties:
+                              custom:
+                                description: The input schema for custom policy tmc_external_ips
+                                  recipe version v1
+                                items:
+                                  properties:
+                                    audit:
+                                      description: Audit (dry-run).
+                                      type: boolean
+                                    parameters:
+                                      description: JSON encoded template parameters.
+                                      type: string
+                                    targetKubernetesResources:
+                                      description: A list of kubernetes api resources
+                                        on which the policy will be enforced, identified
+                                        using apiGroups and kinds.
+                                      items:
+                                        properties:
+                                          apiGroups:
+                                            description: APIGroup is a group containing
+                                              the resource type.
+                                            items:
+                                              type: string
+                                            type: array
+                                          kinds:
+                                            description: Kind is the name of the object
+                                              schema (resource type).
+                                            items:
+                                              type: string
+                                            type: array
+                                        required:
+                                        - apiGroups
+                                        - kinds
+                                        type: object
+                                      type: array
+                                    templateName:
+                                      description: Name of custom template.
+                                      type: string
+                                  required:
+                                  - targetKubernetesResources
+                                  - templateName
+                                  type: object
+                                type: array
                               tmcBlockNodeportService:
                                 description: The input schema for custom policy tmc_block_nodeport_service
                                   recipe version v1
@@ -701,11 +743,11 @@ spec:
                     description: Name of the custom policy
                     type: string
                   scope:
-                    description: 'Scope for the custom, security, image, network and
-                      namespace quota policy, having one of the valid scopes for custom,
-                      security and namespace quota policy: cluster, cluster_group
-                      or organization and valid scopes for image and network policy:
-                      workspace or organization.'
+                    description: 'Scope for the custom, security, image, network,
+                      namespace quota and mutation policy, having one of the valid
+                      scopes for custom, security, mutation, and namespace quota policy:
+                      cluster, cluster_group or organization and valid scopes for
+                      image and network policy: workspace or organization.'
                     items:
                       properties:
                         cluster:
@@ -758,11 +800,47 @@ spec:
                       properties:
                         input:
                           description: 'Input for the custom policy, having one of
-                            the valid recipes: tmc_block_nodeport_service, tmc_block_resources,
-                            tmc_block_rolebinding_subjects, tmc_external_ips, tmc_https_ingress
-                            or tmc_require_labels.'
+                            the valid recipes: [tmc_block_nodeport_service tmc_block_resources
+                            tmc_block_rolebinding_subjects tmc_external_ips tmc_https_ingress
+                            tmc_require_labels custom].'
                           items:
                             properties:
+                              custom:
+                                description: The input schema for custom policy tmc_external_ips
+                                  recipe version v1
+                                items:
+                                  properties:
+                                    audit:
+                                      description: Audit (dry-run).
+                                      type: boolean
+                                    parameters:
+                                      description: JSON encoded template parameters.
+                                      type: string
+                                    targetKubernetesResources:
+                                      description: A list of kubernetes api resources
+                                        on which the policy will be enforced, identified
+                                        using apiGroups and kinds.
+                                      items:
+                                        properties:
+                                          apiGroups:
+                                            description: APIGroup is a group containing
+                                              the resource type.
+                                            items:
+                                              type: string
+                                            type: array
+                                          kinds:
+                                            description: Kind is the name of the object
+                                              schema (resource type).
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                    templateName:
+                                      description: Name of custom template.
+                                      type: string
+                                  type: object
+                                type: array
                               tmcBlockNodeportService:
                                 description: The input schema for custom policy tmc_block_nodeport_service
                                   recipe version v1

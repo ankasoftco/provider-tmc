@@ -18,7 +18,6 @@ Copyright 2021 Upbound Inc.
 //go:generate bash -c "find ../internal/controller -type d -empty -delete"
 //go:generate rm -rf ../examples-generated
 
-
 // Run Upjet generator
 //go:generate go run ../cmd/generator/main.go ..
 

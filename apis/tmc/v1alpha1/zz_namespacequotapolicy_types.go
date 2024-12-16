@@ -13,75 +13,6 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type InputCustomObservation struct {
-
-	// The sum of CPU limits across all pods in a non-terminal state cannot exceed this value
-	LimitsCPU *string `json:"limitsCpu,omitempty" tf:"limits_cpu,omitempty"`
-
-	// The sum of memory limits across all pods in a non-terminal state cannot exceed this value
-	LimitsMemory *string `json:"limitsMemory,omitempty" tf:"limits_memory,omitempty"`
-
-	// The total number of PersistentVolumeClaims that can exist in a namespace
-	PersistentVolumeClaims *float64 `json:"persistentVolumeClaims,omitempty" tf:"persistent_volume_claims,omitempty"`
-
-	// Across all persistent volume claims associated with each storage class, the total number of persistent volume claims that can exist in the namespace
-	PersistentVolumeClaimsPerClass map[string]*float64 `json:"persistentVolumeClaimsPerClass,omitempty" tf:"persistent_volume_claims_per_class,omitempty"`
-
-	// The sum of CPU requests across all pods in a non-terminal state cannot exceed this value
-	RequestsCPU *string `json:"requestsCpu,omitempty" tf:"requests_cpu,omitempty"`
-
-	// The sum of memory requests across all pods in a non-terminal state cannot exceed this value
-	RequestsMemory *string `json:"requestsMemory,omitempty" tf:"requests_memory,omitempty"`
-
-	// The sum of storage requests across all persistent volume claims cannot exceed this value
-	RequestsStorage *string `json:"requestsStorage,omitempty" tf:"requests_storage,omitempty"`
-
-	// Across all persistent volume claims associated with each storage class, the sum of storage requests cannot exceed this value
-	RequestsStoragePerClass map[string]*string `json:"requestsStoragePerClass,omitempty" tf:"requests_storage_per_class,omitempty"`
-
-	// The total number of Services of the given type that can exist in a namespace
-	ResourceCounts map[string]*float64 `json:"resourceCounts,omitempty" tf:"resource_counts,omitempty"`
-}
-
-type InputCustomParameters struct {
-
-	// The sum of CPU limits across all pods in a non-terminal state cannot exceed this value
-	// +kubebuilder:validation:Optional
-	LimitsCPU *string `json:"limitsCpu,omitempty" tf:"limits_cpu,omitempty"`
-
-	// The sum of memory limits across all pods in a non-terminal state cannot exceed this value
-	// +kubebuilder:validation:Optional
-	LimitsMemory *string `json:"limitsMemory,omitempty" tf:"limits_memory,omitempty"`
-
-	// The total number of PersistentVolumeClaims that can exist in a namespace
-	// +kubebuilder:validation:Optional
-	PersistentVolumeClaims *float64 `json:"persistentVolumeClaims,omitempty" tf:"persistent_volume_claims,omitempty"`
-
-	// Across all persistent volume claims associated with each storage class, the total number of persistent volume claims that can exist in the namespace
-	// +kubebuilder:validation:Optional
-	PersistentVolumeClaimsPerClass map[string]*float64 `json:"persistentVolumeClaimsPerClass,omitempty" tf:"persistent_volume_claims_per_class,omitempty"`
-
-	// The sum of CPU requests across all pods in a non-terminal state cannot exceed this value
-	// +kubebuilder:validation:Optional
-	RequestsCPU *string `json:"requestsCpu,omitempty" tf:"requests_cpu,omitempty"`
-
-	// The sum of memory requests across all pods in a non-terminal state cannot exceed this value
-	// +kubebuilder:validation:Optional
-	RequestsMemory *string `json:"requestsMemory,omitempty" tf:"requests_memory,omitempty"`
-
-	// The sum of storage requests across all persistent volume claims cannot exceed this value
-	// +kubebuilder:validation:Optional
-	RequestsStorage *string `json:"requestsStorage,omitempty" tf:"requests_storage,omitempty"`
-
-	// Across all persistent volume claims associated with each storage class, the sum of storage requests cannot exceed this value
-	// +kubebuilder:validation:Optional
-	RequestsStoragePerClass map[string]*string `json:"requestsStoragePerClass,omitempty" tf:"requests_storage_per_class,omitempty"`
-
-	// The total number of Services of the given type that can exist in a namespace
-	// +kubebuilder:validation:Optional
-	ResourceCounts map[string]*float64 `json:"resourceCounts,omitempty" tf:"resource_counts,omitempty"`
-}
-
 type LargeObservation struct {
 }
 
@@ -136,7 +67,7 @@ type NamespaceQuotaPolicyObservation struct {
 	// Name of the namespace quota policy
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Scope for the custom, security, image, network and namespace quota policy, having one of the valid scopes for custom, security and namespace quota policy: cluster, cluster_group or organization and valid scopes for image and network policy: workspace or organization.
+	// Scope for the custom, security, image, network, namespace quota and mutation policy, having one of the valid scopes for custom, security, mutation, and namespace quota policy: cluster, cluster_group or organization and valid scopes for image and network policy: workspace or organization.
 	Scope []NamespaceQuotaPolicyScopeObservation `json:"scope,omitempty" tf:"scope,omitempty"`
 
 	// Spec for the namespace namespace quota policy
@@ -153,7 +84,7 @@ type NamespaceQuotaPolicyParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Scope for the custom, security, image, network and namespace quota policy, having one of the valid scopes for custom, security and namespace quota policy: cluster, cluster_group or organization and valid scopes for image and network policy: workspace or organization.
+	// Scope for the custom, security, image, network, namespace quota and mutation policy, having one of the valid scopes for custom, security, mutation, and namespace quota policy: cluster, cluster_group or organization and valid scopes for image and network policy: workspace or organization.
 	// +kubebuilder:validation:Optional
 	Scope []NamespaceQuotaPolicyScopeParameters `json:"scope,omitempty" tf:"scope,omitempty"`
 
@@ -265,7 +196,7 @@ type NamespaceQuotaPolicyScopeWorkspaceParameters struct {
 type NamespaceQuotaPolicySpecInputObservation struct {
 
 	// The input schema for namespace quota policy custom recipe version v1
-	Custom []InputCustomObservation `json:"custom,omitempty" tf:"custom,omitempty"`
+	Custom []SpecInputCustomObservation `json:"custom,omitempty" tf:"custom,omitempty"`
 
 	// The input schema for namespace quota policy large recipe version v1
 	Large []LargeParameters `json:"large,omitempty" tf:"large,omitempty"`
@@ -281,7 +212,7 @@ type NamespaceQuotaPolicySpecInputParameters struct {
 
 	// The input schema for namespace quota policy custom recipe version v1
 	// +kubebuilder:validation:Optional
-	Custom []InputCustomParameters `json:"custom,omitempty" tf:"custom,omitempty"`
+	Custom []SpecInputCustomParameters `json:"custom,omitempty" tf:"custom,omitempty"`
 
 	// The input schema for namespace quota policy large recipe version v1
 	// +kubebuilder:validation:Optional
@@ -333,6 +264,75 @@ type SmallObservation struct {
 }
 
 type SmallParameters struct {
+}
+
+type SpecInputCustomObservation struct {
+
+	// The sum of CPU limits across all pods in a non-terminal state cannot exceed this value
+	LimitsCPU *string `json:"limitsCpu,omitempty" tf:"limits_cpu,omitempty"`
+
+	// The sum of memory limits across all pods in a non-terminal state cannot exceed this value
+	LimitsMemory *string `json:"limitsMemory,omitempty" tf:"limits_memory,omitempty"`
+
+	// The total number of PersistentVolumeClaims that can exist in a namespace
+	PersistentVolumeClaims *float64 `json:"persistentVolumeClaims,omitempty" tf:"persistent_volume_claims,omitempty"`
+
+	// Across all persistent volume claims associated with each storage class, the total number of persistent volume claims that can exist in the namespace
+	PersistentVolumeClaimsPerClass map[string]*float64 `json:"persistentVolumeClaimsPerClass,omitempty" tf:"persistent_volume_claims_per_class,omitempty"`
+
+	// The sum of CPU requests across all pods in a non-terminal state cannot exceed this value
+	RequestsCPU *string `json:"requestsCpu,omitempty" tf:"requests_cpu,omitempty"`
+
+	// The sum of memory requests across all pods in a non-terminal state cannot exceed this value
+	RequestsMemory *string `json:"requestsMemory,omitempty" tf:"requests_memory,omitempty"`
+
+	// The sum of storage requests across all persistent volume claims cannot exceed this value
+	RequestsStorage *string `json:"requestsStorage,omitempty" tf:"requests_storage,omitempty"`
+
+	// Across all persistent volume claims associated with each storage class, the sum of storage requests cannot exceed this value
+	RequestsStoragePerClass map[string]*string `json:"requestsStoragePerClass,omitempty" tf:"requests_storage_per_class,omitempty"`
+
+	// The total number of Services of the given type that can exist in a namespace
+	ResourceCounts map[string]*float64 `json:"resourceCounts,omitempty" tf:"resource_counts,omitempty"`
+}
+
+type SpecInputCustomParameters struct {
+
+	// The sum of CPU limits across all pods in a non-terminal state cannot exceed this value
+	// +kubebuilder:validation:Optional
+	LimitsCPU *string `json:"limitsCpu,omitempty" tf:"limits_cpu,omitempty"`
+
+	// The sum of memory limits across all pods in a non-terminal state cannot exceed this value
+	// +kubebuilder:validation:Optional
+	LimitsMemory *string `json:"limitsMemory,omitempty" tf:"limits_memory,omitempty"`
+
+	// The total number of PersistentVolumeClaims that can exist in a namespace
+	// +kubebuilder:validation:Optional
+	PersistentVolumeClaims *float64 `json:"persistentVolumeClaims,omitempty" tf:"persistent_volume_claims,omitempty"`
+
+	// Across all persistent volume claims associated with each storage class, the total number of persistent volume claims that can exist in the namespace
+	// +kubebuilder:validation:Optional
+	PersistentVolumeClaimsPerClass map[string]*float64 `json:"persistentVolumeClaimsPerClass,omitempty" tf:"persistent_volume_claims_per_class,omitempty"`
+
+	// The sum of CPU requests across all pods in a non-terminal state cannot exceed this value
+	// +kubebuilder:validation:Optional
+	RequestsCPU *string `json:"requestsCpu,omitempty" tf:"requests_cpu,omitempty"`
+
+	// The sum of memory requests across all pods in a non-terminal state cannot exceed this value
+	// +kubebuilder:validation:Optional
+	RequestsMemory *string `json:"requestsMemory,omitempty" tf:"requests_memory,omitempty"`
+
+	// The sum of storage requests across all persistent volume claims cannot exceed this value
+	// +kubebuilder:validation:Optional
+	RequestsStorage *string `json:"requestsStorage,omitempty" tf:"requests_storage,omitempty"`
+
+	// Across all persistent volume claims associated with each storage class, the sum of storage requests cannot exceed this value
+	// +kubebuilder:validation:Optional
+	RequestsStoragePerClass map[string]*string `json:"requestsStoragePerClass,omitempty" tf:"requests_storage_per_class,omitempty"`
+
+	// The total number of Services of the given type that can exist in a namespace
+	// +kubebuilder:validation:Optional
+	ResourceCounts map[string]*float64 `json:"resourceCounts,omitempty" tf:"resource_counts,omitempty"`
 }
 
 type SpecNamespaceSelectorMatchExpressionsObservation struct {

@@ -227,6 +227,31 @@ spec:
                                 description: Resource ID of the disk encryption set
                                   to use for enabling
                                 type: string
+                              identityConfig:
+                                description: Managed Identity Config
+                                items:
+                                  properties:
+                                    type:
+                                      description: 'Type of managed identity used
+                                        by the cluster (default IDENTITY_TYPE_SYSTEM_ASSIGNED).
+                                        Allowed values include: IDENTITY_TYPE_SYSTEM_ASSIGNED
+                                        or IDENTITY_TYPE_USER_ASSIGNED'
+                                      type: string
+                                    userAssigned:
+                                      description: User Assigned Managed Identity
+                                        Config
+                                      items:
+                                        properties:
+                                          resourceId:
+                                            description: 'The ARM resource ID of user
+                                              assigned identity in the form: ''/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'''
+                                            type: string
+                                        required:
+                                        - resourceId
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                               kubernetesVersion:
                                 description: Kubernetes version of the cluster
                                 type: string
@@ -262,7 +287,9 @@ spec:
                                       type: string
                                     dnsServiceIp:
                                       description: IP address assigned to the Kubernetes
-                                        DNS service
+                                        DNS service. This key can only be set when
+                                        the network_config.network_plugin key is set
+                                        to 'azure'.
                                       type: string
                                     dockerBridgeCidr:
                                       description: A CIDR notation IP range assigned
@@ -272,7 +299,20 @@ spec:
                                       description: Load balancer SKU
                                       type: string
                                     networkPlugin:
-                                      description: Network plugin
+                                      description: 'Network plugin. It is used for
+                                        building Kubernetes network. Allowed values:
+                                        azure, kubenet. Specify ''azure'' for routable
+                                        pod IPs from VNET, ''kubenet'' for non-routable
+                                        pod IPs with an overlay network, Defaults
+                                        to ''kubenet'''
+                                      type: string
+                                    networkPluginMode:
+                                      description: 'Network plugin mode. Allowed values:
+                                        overlay. Used to control the mode the network
+                                        plugin should operate in. For example, ''overlay''
+                                        used with networkPlugin=azure will use an
+                                        overlay network (non-VNET IPs) for pods in
+                                        the cluster.'
                                       type: string
                                     networkPolicy:
                                       description: Network policy
@@ -285,7 +325,9 @@ spec:
                                       type: array
                                     serviceCidr:
                                       description: CIDR notation IP ranges from which
-                                        to assign service cluster IP
+                                        to assign service cluster IP. This key can
+                                        only be set when the network_config.network_plugin
+                                        key is set to 'azure'.
                                       items:
                                         type: string
                                       type: array
@@ -415,6 +457,12 @@ spec:
                                       description: 'The OS type of the nodepool. Allowed
                                         values include: LINUX.'
                                       type: string
+                                    podSubnetId:
+                                      description: The ID of a subnet in an existing
+                                        VNet into which to assign pods in the cluster.
+                                        Requires network-plugin to be azure and not
+                                        compatible with network-plugin-mode overlay
+                                      type: string
                                     scaleSetEvictionPolicy:
                                       description: 'Scale set eviction policy, Allowed
                                         values include: DELETE or DEALLOCATE.'
@@ -467,11 +515,12 @@ spec:
                                       description: Virtual Machine Size
                                       type: string
                                     vnetSubnetId:
-                                      description: If this is not specified, a VNET
-                                        and subnet will be generated and used. If
-                                        no podSubnetID is specified, this applies
-                                        to nodes and pods, otherwise it applies to
-                                        just nodes
+                                      description: The ID of a subnet in an existing
+                                        VNet into which to deploy the cluster. If
+                                        this is not specified, a VNET and subnet will
+                                        be generated and used. If no podSubnetID is
+                                        specified, this applies to nodes and pods,
+                                        otherwise it applies to just nodes
                                       type: string
                                   required:
                                   - count
@@ -499,6 +548,10 @@ spec:
                   subscriptionId:
                     description: Azure Subscription for this cluster
                     type: string
+                  waitForKubeconfig:
+                    description: Wait until pinniped extension is ready to provide
+                      kubeconfig
+                    type: boolean
                 type: object
               managementPolicy:
                 default: FullControl
@@ -707,6 +760,11 @@ spec:
                     type: string
                   id:
                     type: string
+                  kubeconfig:
+                    description: Kubeconfig for connecting to newly created cluster
+                      base64 encoded. This will only be returned if you have elected
+                      to wait for kubeconfig.
+                    type: string
                   meta:
                     description: Metadata for the resource
                     items:
@@ -868,6 +926,29 @@ spec:
                                 description: Resource ID of the disk encryption set
                                   to use for enabling
                                 type: string
+                              identityConfig:
+                                description: Managed Identity Config
+                                items:
+                                  properties:
+                                    type:
+                                      description: 'Type of managed identity used
+                                        by the cluster (default IDENTITY_TYPE_SYSTEM_ASSIGNED).
+                                        Allowed values include: IDENTITY_TYPE_SYSTEM_ASSIGNED
+                                        or IDENTITY_TYPE_USER_ASSIGNED'
+                                      type: string
+                                    userAssigned:
+                                      description: User Assigned Managed Identity
+                                        Config
+                                      items:
+                                        properties:
+                                          resourceId:
+                                            description: 'The ARM resource ID of user
+                                              assigned identity in the form: ''/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'''
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                               kubernetesVersion:
                                 description: Kubernetes version of the cluster
                                 type: string
@@ -901,7 +982,9 @@ spec:
                                       type: string
                                     dnsServiceIp:
                                       description: IP address assigned to the Kubernetes
-                                        DNS service
+                                        DNS service. This key can only be set when
+                                        the network_config.network_plugin key is set
+                                        to 'azure'.
                                       type: string
                                     dockerBridgeCidr:
                                       description: A CIDR notation IP range assigned
@@ -911,7 +994,20 @@ spec:
                                       description: Load balancer SKU
                                       type: string
                                     networkPlugin:
-                                      description: Network plugin
+                                      description: 'Network plugin. It is used for
+                                        building Kubernetes network. Allowed values:
+                                        azure, kubenet. Specify ''azure'' for routable
+                                        pod IPs from VNET, ''kubenet'' for non-routable
+                                        pod IPs with an overlay network, Defaults
+                                        to ''kubenet'''
+                                      type: string
+                                    networkPluginMode:
+                                      description: 'Network plugin mode. Allowed values:
+                                        overlay. Used to control the mode the network
+                                        plugin should operate in. For example, ''overlay''
+                                        used with networkPlugin=azure will use an
+                                        overlay network (non-VNET IPs) for pods in
+                                        the cluster.'
                                       type: string
                                     networkPolicy:
                                       description: Network policy
@@ -924,7 +1020,9 @@ spec:
                                       type: array
                                     serviceCidr:
                                       description: CIDR notation IP ranges from which
-                                        to assign service cluster IP
+                                        to assign service cluster IP. This key can
+                                        only be set when the network_config.network_plugin
+                                        key is set to 'azure'.
                                       items:
                                         type: string
                                       type: array
@@ -1048,6 +1146,12 @@ spec:
                                       description: 'The OS type of the nodepool. Allowed
                                         values include: LINUX.'
                                       type: string
+                                    podSubnetId:
+                                      description: The ID of a subnet in an existing
+                                        VNet into which to assign pods in the cluster.
+                                        Requires network-plugin to be azure and not
+                                        compatible with network-plugin-mode overlay
+                                      type: string
                                     scaleSetEvictionPolicy:
                                       description: 'Scale set eviction policy, Allowed
                                         values include: DELETE or DEALLOCATE.'
@@ -1100,11 +1204,12 @@ spec:
                                       description: Virtual Machine Size
                                       type: string
                                     vnetSubnetId:
-                                      description: If this is not specified, a VNET
-                                        and subnet will be generated and used. If
-                                        no podSubnetID is specified, this applies
-                                        to nodes and pods, otherwise it applies to
-                                        just nodes
+                                      description: The ID of a subnet in an existing
+                                        VNet into which to deploy the cluster. If
+                                        this is not specified, a VNET and subnet will
+                                        be generated and used. If no podSubnetID is
+                                        specified, this applies to nodes and pods,
+                                        otherwise it applies to just nodes
                                       type: string
                                   type: object
                                 type: array
@@ -1122,6 +1227,10 @@ spec:
                   subscriptionId:
                     description: Azure Subscription for this cluster
                     type: string
+                  waitForKubeconfig:
+                    description: Wait until pinniped extension is ready to provide
+                      kubeconfig
+                    type: boolean
                 type: object
               conditions:
                 description: Conditions of the resource.

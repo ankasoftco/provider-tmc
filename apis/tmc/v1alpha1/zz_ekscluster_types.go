@@ -33,6 +33,19 @@ type AMIInfoParameters struct {
 	OverrideBootstrapCmd *string `json:"overrideBootstrapCmd,omitempty" tf:"override_bootstrap_cmd,omitempty"`
 }
 
+type AddonsConfigObservation struct {
+
+	// VPC CNI addon config contains the configuration for the VPC CNI addon of the cluster
+	VPCCniConfig []VPCCniConfigObservation `json:"vpcCniConfig,omitempty" tf:"vpc_cni_config,omitempty"`
+}
+
+type AddonsConfigParameters struct {
+
+	// VPC CNI addon config contains the configuration for the VPC CNI addon of the cluster
+	// +kubebuilder:validation:Optional
+	VPCCniConfig []VPCCniConfigParameters `json:"vpcCniConfig,omitempty" tf:"vpc_cni_config,omitempty"`
+}
+
 type ConfigVPCObservation struct {
 
 	// Enable Kubernetes API requests within your cluster's VPC (such as node to control plane communication) use the private VPC endpoint (see [Amazon EKS cluster endpoint access control](https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html))
@@ -114,6 +127,9 @@ type EKSClusterObservation struct {
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// Kubeconfig for connecting to newly created cluster base64 encoded. This will only be returned if you have elected to wait for kubeconfig.
+	Kubeconfig *string `json:"kubeconfig,omitempty" tf:"kubeconfig,omitempty"`
+
 	// Metadata for the resource
 	Meta []EKSClusterMetaObservation `json:"meta,omitempty" tf:"meta,omitempty"`
 
@@ -131,6 +147,9 @@ type EKSClusterObservation struct {
 
 	// Status of the cluster
 	Status map[string]*string `json:"status,omitempty" tf:"status,omitempty"`
+
+	// Wait until pinniped extension is ready to provide kubeconfig
+	WaitForKubeconfig *bool `json:"waitForKubeconfig,omitempty" tf:"wait_for_kubeconfig,omitempty"`
 }
 
 type EKSClusterParameters struct {
@@ -158,6 +177,10 @@ type EKSClusterParameters struct {
 	// Spec for the cluster
 	// +kubebuilder:validation:Optional
 	Spec []EKSClusterSpecParameters `json:"spec,omitempty" tf:"spec,omitempty"`
+
+	// Wait until pinniped extension is ready to provide kubeconfig
+	// +kubebuilder:validation:Optional
+	WaitForKubeconfig *bool `json:"waitForKubeconfig,omitempty" tf:"wait_for_kubeconfig,omitempty"`
 }
 
 type EKSClusterSpecObservation struct {
@@ -192,6 +215,26 @@ type EKSClusterSpecParameters struct {
 	// Optional proxy name is the name of the Proxy Config to be used for the cluster
 	// +kubebuilder:validation:Optional
 	Proxy *string `json:"proxy,omitempty" tf:"proxy,omitempty"`
+}
+
+type EniConfigObservation struct {
+
+	// Subnet id for the ENI
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Security groups for the ENI
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+}
+
+type EniConfigParameters struct {
+
+	// Subnet id for the ENI
+	// +kubebuilder:validation:Required
+	ID *string `json:"id" tf:"id,omitempty"`
+
+	// Security groups for the ENI
+	// +kubebuilder:validation:Optional
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 }
 
 type KubernetesNetworkConfigObservation struct {
@@ -344,6 +387,9 @@ type ScalingConfigParameters struct {
 
 type SpecConfigObservation struct {
 
+	// Addons config contains the configuration for all the addons of the cluster, which support customization of addon configuration
+	AddonsConfig []AddonsConfigObservation `json:"addonsConfig,omitempty" tf:"addons_config,omitempty"`
+
 	// Kubernetes Network Config
 	KubernetesNetworkConfig []KubernetesNetworkConfigObservation `json:"kubernetesNetworkConfig,omitempty" tf:"kubernetes_network_config,omitempty"`
 
@@ -364,6 +410,10 @@ type SpecConfigObservation struct {
 }
 
 type SpecConfigParameters struct {
+
+	// Addons config contains the configuration for all the addons of the cluster, which support customization of addon configuration
+	// +kubebuilder:validation:Optional
+	AddonsConfig []AddonsConfigParameters `json:"addonsConfig,omitempty" tf:"addons_config,omitempty"`
 
 	// Kubernetes Network Config
 	// +kubebuilder:validation:Optional
@@ -430,6 +480,9 @@ type SpecNodepoolSpecObservation struct {
 	// Kubernetes node labels
 	NodeLabels map[string]*string `json:"nodeLabels,omitempty" tf:"node_labels,omitempty"`
 
+	// AMI release version
+	ReleaseVersion *string `json:"releaseVersion,omitempty" tf:"release_version,omitempty"`
+
 	// Remote access to worker nodes, immutable
 	RemoteAccess []RemoteAccessObservation `json:"remoteAccess,omitempty" tf:"remote_access,omitempty"`
 
@@ -480,6 +533,10 @@ type SpecNodepoolSpecParameters struct {
 	// Kubernetes node labels
 	// +kubebuilder:validation:Optional
 	NodeLabels map[string]*string `json:"nodeLabels,omitempty" tf:"node_labels,omitempty"`
+
+	// AMI release version
+	// +kubebuilder:validation:Optional
+	ReleaseVersion *string `json:"releaseVersion,omitempty" tf:"release_version,omitempty"`
 
 	// Remote access to worker nodes, immutable
 	// +kubebuilder:validation:Optional
@@ -559,6 +616,19 @@ type UpdateConfigParameters struct {
 	// Maximum percentage of nodes unavailable during a version update
 	// +kubebuilder:validation:Optional
 	MaxUnavailablePercentage *string `json:"maxUnavailablePercentage,omitempty" tf:"max_unavailable_percentage,omitempty"`
+}
+
+type VPCCniConfigObservation struct {
+
+	// ENI config for the VPC CNI addon
+	EniConfig []EniConfigObservation `json:"eniConfig,omitempty" tf:"eni_config,omitempty"`
+}
+
+type VPCCniConfigParameters struct {
+
+	// ENI config for the VPC CNI addon
+	// +kubebuilder:validation:Optional
+	EniConfig []EniConfigParameters `json:"eniConfig,omitempty" tf:"eni_config,omitempty"`
 }
 
 // EKSClusterSpec defines the desired state of EKSCluster

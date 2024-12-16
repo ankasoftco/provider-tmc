@@ -46,26 +46,6 @@ type BlockLatestTagParameters struct {
 	Audit *bool `json:"audit,omitempty" tf:"audit,omitempty"`
 }
 
-type CustomObservation struct {
-
-	// Audit (dry-run). Violations will be logged but not denied.
-	Audit *bool `json:"audit,omitempty" tf:"audit,omitempty"`
-
-	// It specifies a list of rules that defines allowed image patterns.
-	Rules []CustomRulesObservation `json:"rules,omitempty" tf:"rules,omitempty"`
-}
-
-type CustomParameters struct {
-
-	// Audit (dry-run). Violations will be logged but not denied.
-	// +kubebuilder:validation:Optional
-	Audit *bool `json:"audit,omitempty" tf:"audit,omitempty"`
-
-	// It specifies a list of rules that defines allowed image patterns.
-	// +kubebuilder:validation:Required
-	Rules []CustomRulesParameters `json:"rules" tf:"rules,omitempty"`
-}
-
 type CustomRulesObservation struct {
 
 	// Allowed image hostnames, wildcards are supported(for example: *.mycompany.com). Empty field is equivalent to *.
@@ -149,7 +129,7 @@ type ImagePolicyObservation struct {
 	// Name of the image policy
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Scope for the custom, security, image, network and namespace quota policy, having one of the valid scopes for custom, security and namespace quota policy: cluster, cluster_group or organization and valid scopes for image and network policy: workspace or organization.
+	// Scope for the custom, security, image, network, namespace quota and mutation policy, having one of the valid scopes for custom, security, mutation, and namespace quota policy: cluster, cluster_group or organization and valid scopes for image and network policy: workspace or organization.
 	Scope []ImagePolicyScopeObservation `json:"scope,omitempty" tf:"scope,omitempty"`
 
 	// Spec for the image policy
@@ -166,7 +146,7 @@ type ImagePolicyParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Scope for the custom, security, image, network and namespace quota policy, having one of the valid scopes for custom, security and namespace quota policy: cluster, cluster_group or organization and valid scopes for image and network policy: workspace or organization.
+	// Scope for the custom, security, image, network, namespace quota and mutation policy, having one of the valid scopes for custom, security, mutation, and namespace quota policy: cluster, cluster_group or organization and valid scopes for image and network policy: workspace or organization.
 	// +kubebuilder:validation:Optional
 	Scope []ImagePolicyScopeParameters `json:"scope,omitempty" tf:"scope,omitempty"`
 
@@ -295,6 +275,26 @@ type ImagePolicySpecParameters struct {
 	NamespaceSelector []SpecNamespaceSelectorParameters `json:"namespaceSelector,omitempty" tf:"namespace_selector,omitempty"`
 }
 
+type InputCustomObservation struct {
+
+	// Audit (dry-run). Violations will be logged but not denied.
+	Audit *bool `json:"audit,omitempty" tf:"audit,omitempty"`
+
+	// It specifies a list of rules that defines allowed image patterns.
+	Rules []CustomRulesObservation `json:"rules,omitempty" tf:"rules,omitempty"`
+}
+
+type InputCustomParameters struct {
+
+	// Audit (dry-run). Violations will be logged but not denied.
+	// +kubebuilder:validation:Optional
+	Audit *bool `json:"audit,omitempty" tf:"audit,omitempty"`
+
+	// It specifies a list of rules that defines allowed image patterns.
+	// +kubebuilder:validation:Required
+	Rules []CustomRulesParameters `json:"rules" tf:"rules,omitempty"`
+}
+
 type NamespaceSelectorMatchExpressionsObservation struct {
 
 	// Key is the label key that the selector applies to
@@ -384,7 +384,7 @@ type SpecInputObservation struct {
 	BlockLatestTag []BlockLatestTagObservation `json:"blockLatestTag,omitempty" tf:"block_latest_tag,omitempty"`
 
 	// The input schema for image policy custom recipe version v1
-	Custom []CustomObservation `json:"custom,omitempty" tf:"custom,omitempty"`
+	Custom []InputCustomObservation `json:"custom,omitempty" tf:"custom,omitempty"`
 
 	// The input schema for image policy require-digest recipe version v1
 	RequireDigest []RequireDigestObservation `json:"requireDigest,omitempty" tf:"require_digest,omitempty"`
@@ -402,7 +402,7 @@ type SpecInputParameters struct {
 
 	// The input schema for image policy custom recipe version v1
 	// +kubebuilder:validation:Optional
-	Custom []CustomParameters `json:"custom,omitempty" tf:"custom,omitempty"`
+	Custom []InputCustomParameters `json:"custom,omitempty" tf:"custom,omitempty"`
 
 	// The input schema for image policy require-digest recipe version v1
 	// +kubebuilder:validation:Optional

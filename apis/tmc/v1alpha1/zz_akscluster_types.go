@@ -128,6 +128,9 @@ type AksClusterObservation struct {
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// Kubeconfig for connecting to newly created cluster base64 encoded. This will only be returned if you have elected to wait for kubeconfig.
+	Kubeconfig *string `json:"kubeconfig,omitempty" tf:"kubeconfig,omitempty"`
+
 	// Metadata for the resource
 	Meta []MetaObservation `json:"meta,omitempty" tf:"meta,omitempty"`
 
@@ -145,6 +148,9 @@ type AksClusterObservation struct {
 
 	// Azure Subscription for this cluster
 	SubscriptionID *string `json:"subscriptionId,omitempty" tf:"subscription_id,omitempty"`
+
+	// Wait until pinniped extension is ready to provide kubeconfig
+	WaitForKubeconfig *bool `json:"waitForKubeconfig,omitempty" tf:"wait_for_kubeconfig,omitempty"`
 }
 
 type AksClusterParameters struct {
@@ -176,6 +182,10 @@ type AksClusterParameters struct {
 	// Azure Subscription for this cluster
 	// +kubebuilder:validation:Optional
 	SubscriptionID *string `json:"subscriptionId,omitempty" tf:"subscription_id,omitempty"`
+
+	// Wait until pinniped extension is ready to provide kubeconfig
+	// +kubebuilder:validation:Optional
+	WaitForKubeconfig *bool `json:"waitForKubeconfig,omitempty" tf:"wait_for_kubeconfig,omitempty"`
 }
 
 type AutoScalingConfigObservation struct {
@@ -275,6 +285,9 @@ type ConfigObservation struct {
 	// Resource ID of the disk encryption set to use for enabling
 	DiskEncryptionSet *string `json:"diskEncryptionSet,omitempty" tf:"disk_encryption_set,omitempty"`
 
+	// Managed Identity Config
+	IdentityConfig []IdentityConfigObservation `json:"identityConfig,omitempty" tf:"identity_config,omitempty"`
+
 	// Kubernetes version of the cluster
 	KubernetesVersion *string `json:"kubernetesVersion,omitempty" tf:"kubernetes_version,omitempty"`
 
@@ -322,6 +335,10 @@ type ConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	DiskEncryptionSet *string `json:"diskEncryptionSet,omitempty" tf:"disk_encryption_set,omitempty"`
 
+	// Managed Identity Config
+	// +kubebuilder:validation:Optional
+	IdentityConfig []IdentityConfigParameters `json:"identityConfig,omitempty" tf:"identity_config,omitempty"`
+
 	// Kubernetes version of the cluster
 	// +kubebuilder:validation:Required
 	KubernetesVersion *string `json:"kubernetesVersion" tf:"kubernetes_version,omitempty"`
@@ -353,6 +370,26 @@ type ConfigParameters struct {
 	// Metadata to apply to the cluster to assist with categorization and organization
 	// +kubebuilder:validation:Optional
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+}
+
+type IdentityConfigObservation struct {
+
+	// Type of managed identity used by the cluster (default IDENTITY_TYPE_SYSTEM_ASSIGNED). Allowed values include: IDENTITY_TYPE_SYSTEM_ASSIGNED or IDENTITY_TYPE_USER_ASSIGNED
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	// User Assigned Managed Identity Config
+	UserAssigned []UserAssignedObservation `json:"userAssigned,omitempty" tf:"user_assigned,omitempty"`
+}
+
+type IdentityConfigParameters struct {
+
+	// Type of managed identity used by the cluster (default IDENTITY_TYPE_SYSTEM_ASSIGNED). Allowed values include: IDENTITY_TYPE_SYSTEM_ASSIGNED or IDENTITY_TYPE_USER_ASSIGNED
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	// User Assigned Managed Identity Config
+	// +kubebuilder:validation:Optional
+	UserAssigned []UserAssignedParameters `json:"userAssigned,omitempty" tf:"user_assigned,omitempty"`
 }
 
 type LinuxConfigObservation struct {
@@ -433,7 +470,7 @@ type NetworkConfigObservation struct {
 	// DNS prefix of the cluster
 	DNSPrefix *string `json:"dnsPrefix,omitempty" tf:"dns_prefix,omitempty"`
 
-	// IP address assigned to the Kubernetes DNS service
+	// IP address assigned to the Kubernetes DNS service. This key can only be set when the network_config.network_plugin key is set to 'azure'.
 	DNSServiceIP *string `json:"dnsServiceIp,omitempty" tf:"dns_service_ip,omitempty"`
 
 	// A CIDR notation IP range assigned to the Docker bridge network
@@ -442,8 +479,11 @@ type NetworkConfigObservation struct {
 	// Load balancer SKU
 	LoadBalancerSku *string `json:"loadBalancerSku,omitempty" tf:"load_balancer_sku,omitempty"`
 
-	// Network plugin
+	// Network plugin. It is used for building Kubernetes network. Allowed values: azure, kubenet. Specify 'azure' for routable pod IPs from VNET, 'kubenet' for non-routable pod IPs with an overlay network, Defaults to 'kubenet'
 	NetworkPlugin *string `json:"networkPlugin,omitempty" tf:"network_plugin,omitempty"`
+
+	// Network plugin mode. Allowed values: overlay. Used to control the mode the network plugin should operate in. For example, 'overlay' used with networkPlugin=azure will use an overlay network (non-VNET IPs) for pods in the cluster.
+	NetworkPluginMode *string `json:"networkPluginMode,omitempty" tf:"network_plugin_mode,omitempty"`
 
 	// Network policy
 	NetworkPolicy *string `json:"networkPolicy,omitempty" tf:"network_policy,omitempty"`
@@ -451,7 +491,7 @@ type NetworkConfigObservation struct {
 	// CIDR notation IP ranges from which to assign pod IPs
 	PodCidr []*string `json:"podCidr,omitempty" tf:"pod_cidr,omitempty"`
 
-	// CIDR notation IP ranges from which to assign service cluster IP
+	// CIDR notation IP ranges from which to assign service cluster IP. This key can only be set when the network_config.network_plugin key is set to 'azure'.
 	ServiceCidr []*string `json:"serviceCidr,omitempty" tf:"service_cidr,omitempty"`
 }
 
@@ -461,7 +501,7 @@ type NetworkConfigParameters struct {
 	// +kubebuilder:validation:Required
 	DNSPrefix *string `json:"dnsPrefix" tf:"dns_prefix,omitempty"`
 
-	// IP address assigned to the Kubernetes DNS service
+	// IP address assigned to the Kubernetes DNS service. This key can only be set when the network_config.network_plugin key is set to 'azure'.
 	// +kubebuilder:validation:Optional
 	DNSServiceIP *string `json:"dnsServiceIp,omitempty" tf:"dns_service_ip,omitempty"`
 
@@ -473,9 +513,13 @@ type NetworkConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	LoadBalancerSku *string `json:"loadBalancerSku,omitempty" tf:"load_balancer_sku,omitempty"`
 
-	// Network plugin
+	// Network plugin. It is used for building Kubernetes network. Allowed values: azure, kubenet. Specify 'azure' for routable pod IPs from VNET, 'kubenet' for non-routable pod IPs with an overlay network, Defaults to 'kubenet'
 	// +kubebuilder:validation:Optional
 	NetworkPlugin *string `json:"networkPlugin,omitempty" tf:"network_plugin,omitempty"`
+
+	// Network plugin mode. Allowed values: overlay. Used to control the mode the network plugin should operate in. For example, 'overlay' used with networkPlugin=azure will use an overlay network (non-VNET IPs) for pods in the cluster.
+	// +kubebuilder:validation:Optional
+	NetworkPluginMode *string `json:"networkPluginMode,omitempty" tf:"network_plugin_mode,omitempty"`
 
 	// Network policy
 	// +kubebuilder:validation:Optional
@@ -485,7 +529,7 @@ type NetworkConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	PodCidr []*string `json:"podCidr,omitempty" tf:"pod_cidr,omitempty"`
 
-	// CIDR notation IP ranges from which to assign service cluster IP
+	// CIDR notation IP ranges from which to assign service cluster IP. This key can only be set when the network_config.network_plugin key is set to 'azure'.
 	// +kubebuilder:validation:Optional
 	ServiceCidr []*string `json:"serviceCidr,omitempty" tf:"service_cidr,omitempty"`
 }
@@ -545,6 +589,9 @@ type NodepoolSpecObservation struct {
 	// The OS type of the nodepool. Allowed values include: LINUX.
 	OsType *string `json:"osType,omitempty" tf:"os_type,omitempty"`
 
+	// The ID of a subnet in an existing VNet into which to assign pods in the cluster. Requires network-plugin to be azure and not compatible with network-plugin-mode overlay
+	PodSubnetID *string `json:"podSubnetId,omitempty" tf:"pod_subnet_id,omitempty"`
+
 	// Scale set eviction policy, Allowed values include: DELETE or DEALLOCATE.
 	ScaleSetEvictionPolicy *string `json:"scaleSetEvictionPolicy,omitempty" tf:"scale_set_eviction_policy,omitempty"`
 
@@ -569,7 +616,7 @@ type NodepoolSpecObservation struct {
 	// Virtual Machine Size
 	VMSize *string `json:"vmSize,omitempty" tf:"vm_size,omitempty"`
 
-	// If this is not specified, a VNET and subnet will be generated and used. If no podSubnetID is specified, this applies to nodes and pods, otherwise it applies to just nodes
+	// The ID of a subnet in an existing VNet into which to deploy the cluster. If this is not specified, a VNET and subnet will be generated and used. If no podSubnetID is specified, this applies to nodes and pods, otherwise it applies to just nodes
 	VnetSubnetID *string `json:"vnetSubnetId,omitempty" tf:"vnet_subnet_id,omitempty"`
 }
 
@@ -619,6 +666,10 @@ type NodepoolSpecParameters struct {
 	// +kubebuilder:validation:Optional
 	OsType *string `json:"osType,omitempty" tf:"os_type,omitempty"`
 
+	// The ID of a subnet in an existing VNet into which to assign pods in the cluster. Requires network-plugin to be azure and not compatible with network-plugin-mode overlay
+	// +kubebuilder:validation:Optional
+	PodSubnetID *string `json:"podSubnetId,omitempty" tf:"pod_subnet_id,omitempty"`
+
 	// Scale set eviction policy, Allowed values include: DELETE or DEALLOCATE.
 	// +kubebuilder:validation:Optional
 	ScaleSetEvictionPolicy *string `json:"scaleSetEvictionPolicy,omitempty" tf:"scale_set_eviction_policy,omitempty"`
@@ -651,7 +702,7 @@ type NodepoolSpecParameters struct {
 	// +kubebuilder:validation:Required
 	VMSize *string `json:"vmSize" tf:"vm_size,omitempty"`
 
-	// If this is not specified, a VNET and subnet will be generated and used. If no podSubnetID is specified, this applies to nodes and pods, otherwise it applies to just nodes
+	// The ID of a subnet in an existing VNet into which to deploy the cluster. If this is not specified, a VNET and subnet will be generated and used. If no podSubnetID is specified, this applies to nodes and pods, otherwise it applies to just nodes
 	// +kubebuilder:validation:Optional
 	VnetSubnetID *string `json:"vnetSubnetId,omitempty" tf:"vnet_subnet_id,omitempty"`
 }
@@ -789,6 +840,19 @@ type UpgradeConfigParameters struct {
 	// Max Surge
 	// +kubebuilder:validation:Optional
 	MaxSurge *string `json:"maxSurge,omitempty" tf:"max_surge,omitempty"`
+}
+
+type UserAssignedObservation struct {
+
+	// The ARM resource ID of user assigned identity in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'
+	ResourceID *string `json:"resourceId,omitempty" tf:"resource_id,omitempty"`
+}
+
+type UserAssignedParameters struct {
+
+	// The ARM resource ID of user assigned identity in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'
+	// +kubebuilder:validation:Required
+	ResourceID *string `json:"resourceId" tf:"resource_id,omitempty"`
 }
 
 // AksClusterSpec defines the desired state of AksCluster

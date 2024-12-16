@@ -834,7 +834,7 @@ func (mg *KubernetesSecret) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this KubernetesSecret
 func (tr *KubernetesSecret) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"spec[*].docker_config_json[*].password": "spec.forProvider.spec[*].dockerConfigJson[*].passwordSecretRef"}
+	return map[string]string{"spec[*].docker_config_json[*].password": "spec.forProvider.spec[*].dockerConfigJson[*].passwordSecretRef", "spec[*].opaque": "spec.forProvider.spec[*].opaqueSecretRef"}
 }
 
 // GetObservation of this KubernetesSecret

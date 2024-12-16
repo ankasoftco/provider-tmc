@@ -40,6 +40,26 @@ type AwsCredentialParameters struct {
 	IAMRole []IAMRoleParameters `json:"iamRole,omitempty" tf:"iam_role,omitempty"`
 }
 
+type AzureCredentialObservation struct {
+
+	// Azure service principal
+	ServicePrincipal []ServicePrincipalObservation `json:"servicePrincipal,omitempty" tf:"service_principal,omitempty"`
+
+	// Azure service principal
+	ServicePrincipalWithCertificate []ServicePrincipalWithCertificateObservation `json:"servicePrincipalWithCertificate,omitempty" tf:"service_principal_with_certificate,omitempty"`
+}
+
+type AzureCredentialParameters struct {
+
+	// Azure service principal
+	// +kubebuilder:validation:Optional
+	ServicePrincipal []ServicePrincipalParameters `json:"servicePrincipal,omitempty" tf:"service_principal,omitempty"`
+
+	// Azure service principal
+	// +kubebuilder:validation:Optional
+	ServicePrincipalWithCertificate []ServicePrincipalWithCertificateParameters `json:"servicePrincipalWithCertificate,omitempty" tf:"service_principal_with_certificate,omitempty"`
+}
+
 type CredentialMetaObservation struct {
 
 	// Annotations for the resource
@@ -143,6 +163,9 @@ type DataObservation struct {
 	// AWS credential data type
 	AwsCredential []AwsCredentialObservation `json:"awsCredential,omitempty" tf:"aws_credential,omitempty"`
 
+	// Azure credential
+	AzureCredential []AzureCredentialObservation `json:"azureCredential,omitempty" tf:"azure_credential,omitempty"`
+
 	// Generic credential data type used to hold a blob of data represented as string
 	GenericCredential *string `json:"genericCredential,omitempty" tf:"generic_credential,omitempty"`
 
@@ -155,6 +178,10 @@ type DataParameters struct {
 	// AWS credential data type
 	// +kubebuilder:validation:Optional
 	AwsCredential []AwsCredentialParameters `json:"awsCredential,omitempty" tf:"aws_credential,omitempty"`
+
+	// Azure credential
+	// +kubebuilder:validation:Optional
+	AzureCredential []AzureCredentialParameters `json:"azureCredential,omitempty" tf:"azure_credential,omitempty"`
 
 	// Generic credential data type used to hold a blob of data represented as string
 	// +kubebuilder:validation:Optional
@@ -203,6 +230,102 @@ type KeyValueParameters struct {
 	// Type of Secret data, usually mapped to k8s secret type. Supported types: [SECRET_TYPE_UNSPECIFIED,OPAQUE_SECRET_TYPE,DOCKERCONFIGJSON_SECRET_TYPE]
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type ServicePrincipalObservation struct {
+
+	// Azure Cloud name
+	AzureCloudName *string `json:"azureCloudName,omitempty" tf:"azure_cloud_name,omitempty"`
+
+	// Client ID of the Service Principal
+	ClientID *string `json:"clientId,omitempty" tf:"client_id,omitempty"`
+
+	// Client Secret of the Service Principal
+	ClientSecret *string `json:"clientSecret,omitempty" tf:"client_secret,omitempty"`
+
+	// Resource Group name
+	ResourceGroup *string `json:"resourceGroup,omitempty" tf:"resource_group,omitempty"`
+
+	// Subscription ID of the Azure credential
+	SubscriptionID *string `json:"subscriptionId,omitempty" tf:"subscription_id,omitempty"`
+
+	// Tenant ID of the Azure credential
+	TenantID *string `json:"tenantId,omitempty" tf:"tenant_id,omitempty"`
+}
+
+type ServicePrincipalParameters struct {
+
+	// Azure Cloud name
+	// +kubebuilder:validation:Optional
+	AzureCloudName *string `json:"azureCloudName,omitempty" tf:"azure_cloud_name,omitempty"`
+
+	// Client ID of the Service Principal
+	// +kubebuilder:validation:Required
+	ClientID *string `json:"clientId" tf:"client_id,omitempty"`
+
+	// Client Secret of the Service Principal
+	// +kubebuilder:validation:Optional
+	ClientSecret *string `json:"clientSecret,omitempty" tf:"client_secret,omitempty"`
+
+	// Resource Group name
+	// +kubebuilder:validation:Required
+	ResourceGroup *string `json:"resourceGroup" tf:"resource_group,omitempty"`
+
+	// Subscription ID of the Azure credential
+	// +kubebuilder:validation:Required
+	SubscriptionID *string `json:"subscriptionId" tf:"subscription_id,omitempty"`
+
+	// Tenant ID of the Azure credential
+	// +kubebuilder:validation:Required
+	TenantID *string `json:"tenantId" tf:"tenant_id,omitempty"`
+}
+
+type ServicePrincipalWithCertificateObservation struct {
+
+	// Azure Cloud name
+	AzureCloudName *string `json:"azureCloudName,omitempty" tf:"azure_cloud_name,omitempty"`
+
+	// Client certificate of the Service Principal
+	ClientCertificate *string `json:"clientCertificate,omitempty" tf:"client_certificate,omitempty"`
+
+	// Client ID of the Service Principal
+	ClientID *string `json:"clientId,omitempty" tf:"client_id,omitempty"`
+
+	// IDs of the Azure Subscriptions that the Service Principal can manage
+	ManagedSubscriptions []*string `json:"managedSubscriptions,omitempty" tf:"managed_subscriptions,omitempty"`
+
+	// Subscription ID of the Azure credential
+	SubscriptionID *string `json:"subscriptionId,omitempty" tf:"subscription_id,omitempty"`
+
+	// Tenant ID of the Azure credential
+	TenantID *string `json:"tenantId,omitempty" tf:"tenant_id,omitempty"`
+}
+
+type ServicePrincipalWithCertificateParameters struct {
+
+	// Azure Cloud name
+	// +kubebuilder:validation:Optional
+	AzureCloudName *string `json:"azureCloudName,omitempty" tf:"azure_cloud_name,omitempty"`
+
+	// Client certificate of the Service Principal
+	// +kubebuilder:validation:Required
+	ClientCertificate *string `json:"clientCertificate" tf:"client_certificate,omitempty"`
+
+	// Client ID of the Service Principal
+	// +kubebuilder:validation:Required
+	ClientID *string `json:"clientId" tf:"client_id,omitempty"`
+
+	// IDs of the Azure Subscriptions that the Service Principal can manage
+	// +kubebuilder:validation:Optional
+	ManagedSubscriptions []*string `json:"managedSubscriptions,omitempty" tf:"managed_subscriptions,omitempty"`
+
+	// Subscription ID of the Azure credential
+	// +kubebuilder:validation:Required
+	SubscriptionID *string `json:"subscriptionId" tf:"subscription_id,omitempty"`
+
+	// Tenant ID of the Azure credential
+	// +kubebuilder:validation:Required
+	TenantID *string `json:"tenantId" tf:"tenant_id,omitempty"`
 }
 
 // CredentialSpec defines the desired state of Credential

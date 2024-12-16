@@ -272,7 +272,7 @@ type NetworkPolicyObservation struct {
 	// Name of the network policy
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Scope for the custom, security, image, network and namespace quota policy, having one of the valid scopes for custom, security and namespace quota policy: cluster, cluster_group or organization and valid scopes for image and network policy: workspace or organization.
+	// Scope for the custom, security, image, network, namespace quota and mutation policy, having one of the valid scopes for custom, security, mutation, and namespace quota policy: cluster, cluster_group or organization and valid scopes for image and network policy: workspace or organization.
 	Scope []NetworkPolicyScopeObservation `json:"scope,omitempty" tf:"scope,omitempty"`
 
 	// Spec for the network policy
@@ -289,7 +289,7 @@ type NetworkPolicyParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Scope for the custom, security, image, network and namespace quota policy, having one of the valid scopes for custom, security and namespace quota policy: cluster, cluster_group or organization and valid scopes for image and network policy: workspace or organization.
+	// Scope for the custom, security, image, network, namespace quota and mutation policy, having one of the valid scopes for custom, security, mutation, and namespace quota policy: cluster, cluster_group or organization and valid scopes for image and network policy: workspace or organization.
 	// +kubebuilder:validation:Optional
 	Scope []NetworkPolicyScopeParameters `json:"scope,omitempty" tf:"scope,omitempty"`
 

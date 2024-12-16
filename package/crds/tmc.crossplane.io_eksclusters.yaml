@@ -112,6 +112,40 @@ spec:
                           description: EKS config for the cluster control plane
                           items:
                             properties:
+                              addonsConfig:
+                                description: Addons config contains the configuration
+                                  for all the addons of the cluster, which support
+                                  customization of addon configuration
+                                items:
+                                  properties:
+                                    vpcCniConfig:
+                                      description: VPC CNI addon config contains the
+                                        configuration for the VPC CNI addon of the
+                                        cluster
+                                      items:
+                                        properties:
+                                          eniConfig:
+                                            description: ENI config for the VPC CNI
+                                              addon
+                                            items:
+                                              properties:
+                                                id:
+                                                  description: Subnet id for the ENI
+                                                  type: string
+                                                securityGroups:
+                                                  description: Security groups for
+                                                    the ENI
+                                                  items:
+                                                    type: string
+                                                  type: array
+                                              required:
+                                              - id
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                               kubernetesNetworkConfig:
                                 description: Kubernetes Network Config
                                 items:
@@ -275,6 +309,9 @@ spec:
                                         type: string
                                       description: Kubernetes node labels
                                       type: object
+                                    releaseVersion:
+                                      description: AMI release version
+                                      type: string
                                     remoteAccess:
                                       description: Remote access to worker nodes,
                                         immutable
@@ -376,6 +413,10 @@ spec:
                       - nodepool
                       type: object
                     type: array
+                  waitForKubeconfig:
+                    description: Wait until pinniped extension is ready to provide
+                      kubeconfig
+                    type: boolean
                 type: object
               managementPolicy:
                 default: FullControl
@@ -580,6 +621,11 @@ spec:
                     type: string
                   id:
                     type: string
+                  kubeconfig:
+                    description: Kubeconfig for connecting to newly created cluster
+                      base64 encoded. This will only be returned if you have elected
+                      to wait for kubeconfig.
+                    type: string
                   meta:
                     description: Metadata for the resource
                     items:
@@ -628,6 +674,38 @@ spec:
                           description: EKS config for the cluster control plane
                           items:
                             properties:
+                              addonsConfig:
+                                description: Addons config contains the configuration
+                                  for all the addons of the cluster, which support
+                                  customization of addon configuration
+                                items:
+                                  properties:
+                                    vpcCniConfig:
+                                      description: VPC CNI addon config contains the
+                                        configuration for the VPC CNI addon of the
+                                        cluster
+                                      items:
+                                        properties:
+                                          eniConfig:
+                                            description: ENI config for the VPC CNI
+                                              addon
+                                            items:
+                                              properties:
+                                                id:
+                                                  description: Subnet id for the ENI
+                                                  type: string
+                                                securityGroups:
+                                                  description: Security groups for
+                                                    the ENI
+                                                  items:
+                                                    type: string
+                                                  type: array
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                               kubernetesNetworkConfig:
                                 description: Kubernetes Network Config
                                 items:
@@ -781,6 +859,9 @@ spec:
                                         type: string
                                       description: Kubernetes node labels
                                       type: object
+                                    releaseVersion:
+                                      description: AMI release version
+                                      type: string
                                     remoteAccess:
                                       description: Remote access to worker nodes,
                                         immutable
@@ -878,6 +959,10 @@ spec:
                       type: string
                     description: Status of the cluster
                     type: object
+                  waitForKubeconfig:
+                    description: Wait until pinniped extension is ready to provide
+                      kubeconfig
+                    type: boolean
                 type: object
               conditions:
                 description: Conditions of the resource.
